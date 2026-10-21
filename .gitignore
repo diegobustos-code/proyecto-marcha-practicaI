@@ -1,0 +1,7 @@
+# Datos crudos: pesan mucho y tienen su propia licencia (se descargan de PhysioNet y CASIA)
+datos/crudos/**
+!datos/crudos/**/.gitkeep
+# Señales limpias individuales (se regeneran con el notebook)
+datos/procesados/senales_limpias/
+.ipynb_checkpoints/
+__pycache__/
