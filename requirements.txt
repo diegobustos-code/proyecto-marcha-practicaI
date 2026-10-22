@@ -9,3 +9,4 @@ jupyterlab
 scikit-learn
 xgboost
 joblib
+torch

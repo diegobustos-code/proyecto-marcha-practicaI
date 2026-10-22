@@ -1,0 +1,64 @@
+{
+  "fecha": "2026-10-22T01:43:27",
+  "datos": "datos/procesados/senales_limpias/*.csv (personas de labwalks_modelo.csv)",
+  "personas": 72,
+  "canales_en_orden": [
+    "acc_v",
+    "acc_ml",
+    "acc_ap",
+    "giro_yaw",
+    "giro_pitch",
+    "giro_roll"
+  ],
+  "entrada": {
+    "frecuencia_hz": 50,
+    "diezmado_desde_100_hz": 2,
+    "ventana_s": 5.0,
+    "paso_s": 2.5,
+    "muestras_por_ventana": 250
+  },
+  "normalizacion": {
+    "media": [
+      -0.0001500000071246177,
+      -0.03892499953508377,
+      -0.11947999894618988,
+      0.46725600957870483,
+      -0.10136599838733673,
+      0.2303529977798462
+    ],
+    "desviacion": [
+      0.20701399445533752,
+      0.1542000025510788,
+      0.21244099736213684,
+      28.07624053955078,
+      16.60418128967285,
+      18.184833526611328
+    ]
+  },
+  "red": {
+    "tipo": "CNN + LSTM",
+    "filtros_convolucion": [
+      16,
+      32
+    ],
+    "tamano_oculto": 32,
+    "dropout": 0.3,
+    "tasa_aprendizaje": 0.001,
+    "tamano_lote": 32,
+    "epocas_entrenadas": 40
+  },
+  "prediccion_persona": "promedio de la probabilidad de sus ventanas; umbral 0,5",
+  "validacion": "5 particiones estratificadas x 3 repeticiones, semilla 42",
+  "metricas_validacion": {
+    "exactitud": 0.5324,
+    "sensibilidad": 0.5841,
+    "especificidad": 0.4821,
+    "f1": 0.4718,
+    "auc": 0.5531
+  },
+  "versiones": {
+    "python": "3.14.6",
+    "torch": "2.14.1+cpu",
+    "numpy": "2.4.6"
+  }
+}
