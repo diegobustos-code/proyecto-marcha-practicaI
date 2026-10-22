@@ -68,3 +68,11 @@ figuras/            gráficos para el informe
 **Pendiente**
 - Corregir el cálculo del CV del tiempo de paso (valores extremos por pausas o giros).
 - Sub-etapa 1.3: entrenar Random Forest, XGBoost y LSTM con validación por sujeto.
+
+**Resuelto (21 oct.)**
+- CV del tiempo de paso corregido (se descartan intervalos fuera de 0,5–1,5 veces la mediana).
+- `n_pasos` excluido de las variables de marcha; 14 variables no redundantes en `labwalks_modelo.csv`.
+- Nuevo criterio de calidad: se excluye un registro si se descarta más del 20 % de sus intervalos entre pasos. Se excluyó fl015 (28 %); la muestra quedó en 72 personas (38 no caen, 34 caen).
+
+**Pendiente**
+- Sub-etapa 1.3: entrenar Random Forest, XGBoost y LSTM con validación por sujeto.
