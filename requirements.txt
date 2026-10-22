@@ -6,3 +6,6 @@ wfdb
 openpyxl
 opencv-python
 jupyterlab
+scikit-learn
+xgboost
+joblib

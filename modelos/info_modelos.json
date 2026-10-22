@@ -1,0 +1,70 @@
+{
+  "fecha": "2026-10-22T00:12:33",
+  "datos": "datos/procesados/labwalks_modelo.csv",
+  "personas": 72,
+  "variables_en_orden": [
+    "cadencia_pasos_min",
+    "cv_tiempo_paso_pct",
+    "cv_tiempo_zancada_pct",
+    "regularidad_paso",
+    "regularidad_zancada",
+    "simetria",
+    "frec_dominante_hz",
+    "amplitud_dominante",
+    "ancho_pico_hz",
+    "rms_acc_ml",
+    "rms_acc_ap",
+    "rms_giro_yaw",
+    "rms_giro_pitch",
+    "rms_giro_roll"
+  ],
+  "etiqueta": "cae (1 = cae, 0 = no cae)",
+  "validacion": "5 particiones estratificadas x 10 repeticiones, semilla 42",
+  "metricas_validacion": {
+    "Random Forest": {
+      "exactitud_mean": 0.6067,
+      "exactitud_std": 0.1094,
+      "sensibilidad_mean": 0.6024,
+      "sensibilidad_std": 0.1674,
+      "especificidad_mean": 0.6104,
+      "especificidad_std": 0.1771,
+      "f1_mean": 0.586,
+      "f1_std": 0.1157,
+      "auc_mean": 0.6766,
+      "auc_std": 0.1366
+    },
+    "XGBoost": {
+      "exactitud_mean": 0.5946,
+      "exactitud_std": 0.1271,
+      "sensibilidad_mean": 0.5486,
+      "sensibilidad_std": 0.1942,
+      "especificidad_mean": 0.635,
+      "especificidad_std": 0.1945,
+      "f1_mean": 0.551,
+      "f1_std": 0.1547,
+      "auc_mean": 0.6439,
+      "auc_std": 0.1528
+    }
+  },
+  "parametros": {
+    "Random Forest": {
+      "class_weight": "balanced",
+      "min_samples_leaf": 2,
+      "n_estimators": 500
+    },
+    "XGBoost": {
+      "colsample_bytree": 0.8,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 300,
+      "subsample": 0.8
+    }
+  },
+  "versiones": {
+    "python": "3.14.6",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.4.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}

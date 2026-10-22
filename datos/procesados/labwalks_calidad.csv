@@ -48,7 +48,7 @@ fl009_base,True,0,False,0.02,0.934,41.0,False,False,False,
 fl010_base,True,0,False,0.05,0.888,36.0,False,False,False,
 fl011_base,True,0,False,0.02,1.05,49.0,False,False,False,
 fl013_base,True,0,False,0.01,0.911,69.0,False,False,False,
-fl015_base,True,0,False,0.01,1.076,162.0,False,False,False,
+fl015_base,True,0,False,0.01,1.076,162.0,False,False,True,detección de pasos no confiable
 fl016_base,True,0,False,0.02,1.075,54.0,False,False,False,
 fl017_base,True,0,False,0.01,0.963,83.0,False,False,False,
 fl018_base,True,0,False,0.02,0.936,49.0,False,False,False,
