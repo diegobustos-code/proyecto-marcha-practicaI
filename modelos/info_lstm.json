@@ -1,6 +1,6 @@
 {
-  "fecha": "2026-10-22T01:43:27",
-  "datos": "datos/procesados/senales_limpias/*.csv (personas de labwalks_modelo.csv)",
+  "fecha": "2026-10-22T23:00:44",
+  "datos": "laboratorio: señales de las personas de labwalks_modelo.csv, máximo 60 ventanas por persona",
   "personas": 72,
   "canales_en_orden": [
     "acc_v",

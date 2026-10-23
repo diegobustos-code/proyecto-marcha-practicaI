@@ -5,3 +5,5 @@ datos/crudos/**
 datos/procesados/senales_limpias/
 .ipynb_checkpoints/
 __pycache__/
+# Señales de vida diaria para la LSTM (se regeneran con el notebook 01b)
+datos/procesados/vida_diaria/senales/

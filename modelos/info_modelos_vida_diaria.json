@@ -1,0 +1,72 @@
+{
+  "fecha": "2026-10-22T22:54:11",
+  "datos": "datos/procesados/vida_diaria_modelo.csv",
+  "personas": 70,
+  "variables_en_orden": [
+    "cadencia_pasos_min",
+    "cv_tiempo_paso_pct",
+    "cv_tiempo_zancada_pct",
+    "regularidad_paso",
+    "regularidad_zancada",
+    "simetria",
+    "frec_dominante_hz",
+    "amplitud_dominante",
+    "ancho_pico_hz",
+    "rms_acc_ap",
+    "rms_acc_ml",
+    "rms_giro_pitch",
+    "rms_giro_roll",
+    "rms_giro_yaw",
+    "minutos_marcha_dia",
+    "duracion_media_tramo_s"
+  ],
+  "etiqueta": "cae (1 = cae, 0 = no cae)",
+  "validacion": "5 particiones estratificadas x 10 repeticiones, semilla 42",
+  "metricas_validacion": {
+    "Random Forest": {
+      "exactitud_mean": 0.6229,
+      "exactitud_std": 0.1164,
+      "sensibilidad_mean": 0.5,
+      "sensibilidad_std": 0.213,
+      "especificidad_mean": 0.715,
+      "especificidad_std": 0.1558,
+      "f1_mean": 0.5165,
+      "f1_std": 0.1774,
+      "auc_mean": 0.6217,
+      "auc_std": 0.1645
+    },
+    "XGBoost": {
+      "exactitud_mean": 0.6157,
+      "exactitud_std": 0.1117,
+      "sensibilidad_mean": 0.49,
+      "sensibilidad_std": 0.2114,
+      "especificidad_mean": 0.71,
+      "especificidad_std": 0.1393,
+      "f1_mean": 0.5063,
+      "f1_std": 0.1732,
+      "auc_mean": 0.6088,
+      "auc_std": 0.1571
+    }
+  },
+  "parametros": {
+    "Random Forest": {
+      "class_weight": "balanced",
+      "min_samples_leaf": 2,
+      "n_estimators": 500
+    },
+    "XGBoost": {
+      "colsample_bytree": 0.8,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 300,
+      "subsample": 0.8
+    }
+  },
+  "versiones": {
+    "python": "3.14.6",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.4.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}

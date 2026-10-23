@@ -81,6 +81,50 @@ Contiene `registro`, `grupo`, `cae` y solo las variables de marcha elegidas para
 | `casia_calidad_muestra.csv` | En una muestra: tamaño de imagen, área media de la silueta y cuadros vacíos |
 | `casia_periodo_marcha.csv` | En vistas laterales: período de paso (cuadros) y cadencia estimada desde la silueta |
 
+## Vida diaria: registros de 3 días de LTMM (notebook `01b_Vida_diaria.ipynb`)
+
+### `datos/procesados/vida_diaria/tramos/<registro>.csv` (una fila por tramo de marcha)
+
+| Columna | Significado |
+|---|---|
+| `registro`, `tramo` | Registro de 3 días y número del tramo (1 = el más largo) |
+| `inicio_h` | Horas desde el inicio del registro hasta el comienzo del tramo |
+| `duracion_s` | Duración del tramo detectado, antes de recortar sus bordes (s) |
+| `n_pasos`, `pct_intervalos_descartados` y variables de marcha | Iguales a las de `labwalks_variables.csv`, calculadas sobre el tramo |
+| `valido` | `True` si el tramo tiene al menos 10 pasos y no más del 20 % de intervalos descartados |
+
+### `datos/procesados/vida_diaria_variables.csv` (una fila por persona)
+
+| Columna | Significado |
+|---|---|
+| `registro`, `clave` | Nombre del registro (`CO001`) y clave en minúsculas de 5 letras (`co001`), que lo une con su caminata de laboratorio |
+| `grupo`, `cae` | Igual que en laboratorio: `CO` = no cae (0), `FL` = cae (1) |
+| `edad`, `sexo` | Tomados del encabezado `.hea` del registro (`#Age`, `#Sex`) |
+| `horas` | Duración total del registro (h) |
+| `tramos_detectados`, `tramos_validos` | Tramos de marcha de al menos 30 s detectados y los que pasaron el control de calidad |
+| `minutos_marcha`, `minutos_marcha_dia` | Minutos totales en tramos de marcha y su equivalente por cada 24 h |
+| `duracion_media_tramo_s` | Duración promedio de los tramos de marcha (s) |
+| Variables de marcha | **Mediana** de cada variable en los tramos válidos de la persona |
+
+Se excluyen las personas con menos de 5 tramos válidos.
+
+### Detector de tramos de marcha
+
+Ventanas de 5 s con traslape del 50 % sobre la aceleración vertical. Una ventana es marcha si: desviación estándar > 0,06 g, al menos el 50 % de la energía entre 0,6 y 3 Hz, y pico de autocorrelación > 0,4 entre 0,3 y 1,2 s. Las ventanas seguidas se unen en tramos y se usan los de al menos 30 s, recortando 2,5 s en cada borde. El detector se comprueba con las caminatas de laboratorio (sección 3.1 del notebook).
+
+### Otros archivos de vida diaria
+
+| Archivo | Contenido |
+|---|---|
+| `vida_diaria/senales/<registro>.npz` | Señal limpia de los tramos válidos, hasta 10 min por persona, a 50 Hz (`tramo_1`, `tramo_2`, … y `canales`) |
+| `vida_diaria_comparacion_grupos.csv` | Igual que `labwalks_comparacion_grupos.csv`, para la vida diaria |
+| `vida_diaria_modelo.csv` | Entrada de los modelos con `DATOS = "vida_diaria"`: variables no redundantes (misma regla de 0,9) |
+| `combinado_modelo.csv` | Entrada con `DATOS = "combinado"`: variables de `labwalks_modelo.csv` (terminan en `_lab`) y de `vida_diaria_modelo.csv` (terminan en `_vd`) |
+
+### Archivos de resultados según `DATOS`
+
+Los notebooks 03 y 04 agregan el nombre de la opción al final de sus archivos: con `"laboratorio"` quedan como antes (`metricas_modelos.csv`); con las otras, `metricas_modelos_vida_diaria.csv`, `random_forest_combinado.joblib`, etc.
+
 ### Códigos de CASIA
 
 | Código | Significado | Base |

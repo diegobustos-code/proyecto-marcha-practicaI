@@ -1,0 +1,86 @@
+{
+  "fecha": "2026-10-22T22:56:25",
+  "datos": "datos/procesados/combinado_modelo.csv",
+  "personas": 62,
+  "variables_en_orden": [
+    "cadencia_pasos_min_lab",
+    "cv_tiempo_paso_pct_lab",
+    "cv_tiempo_zancada_pct_lab",
+    "regularidad_paso_lab",
+    "regularidad_zancada_lab",
+    "simetria_lab",
+    "frec_dominante_hz_lab",
+    "amplitud_dominante_lab",
+    "ancho_pico_hz_lab",
+    "rms_acc_ml_lab",
+    "rms_acc_ap_lab",
+    "rms_giro_yaw_lab",
+    "rms_giro_pitch_lab",
+    "rms_giro_roll_lab",
+    "cadencia_pasos_min_vd",
+    "cv_tiempo_paso_pct_vd",
+    "cv_tiempo_zancada_pct_vd",
+    "regularidad_paso_vd",
+    "regularidad_zancada_vd",
+    "simetria_vd",
+    "frec_dominante_hz_vd",
+    "amplitud_dominante_vd",
+    "ancho_pico_hz_vd",
+    "rms_acc_ap_vd",
+    "rms_acc_ml_vd",
+    "rms_giro_pitch_vd",
+    "rms_giro_roll_vd",
+    "rms_giro_yaw_vd",
+    "minutos_marcha_dia_vd",
+    "duracion_media_tramo_s_vd"
+  ],
+  "etiqueta": "cae (1 = cae, 0 = no cae)",
+  "validacion": "5 particiones estratificadas x 10 repeticiones, semilla 42",
+  "metricas_validacion": {
+    "Random Forest": {
+      "exactitud_mean": 0.616,
+      "exactitud_std": 0.0988,
+      "sensibilidad_mean": 0.5227,
+      "sensibilidad_std": 0.1941,
+      "especificidad_mean": 0.6886,
+      "especificidad_std": 0.1491,
+      "f1_mean": 0.5281,
+      "f1_std": 0.1539,
+      "auc_mean": 0.6178,
+      "auc_std": 0.1454
+    },
+    "XGBoost": {
+      "exactitud_mean": 0.5591,
+      "exactitud_std": 0.1015,
+      "sensibilidad_mean": 0.386,
+      "sensibilidad_std": 0.1714,
+      "especificidad_mean": 0.6914,
+      "especificidad_std": 0.1692,
+      "f1_mean": 0.4177,
+      "f1_std": 0.1559,
+      "auc_mean": 0.5479,
+      "auc_std": 0.142
+    }
+  },
+  "parametros": {
+    "Random Forest": {
+      "class_weight": "balanced",
+      "min_samples_leaf": 2,
+      "n_estimators": 500
+    },
+    "XGBoost": {
+      "colsample_bytree": 0.8,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "n_estimators": 300,
+      "subsample": 0.8
+    }
+  },
+  "versiones": {
+    "python": "3.14.6",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.4.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}
