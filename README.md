@@ -16,14 +16,16 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 
 ## Documentos de avance
 
-Están en `informes/` (PDF y Word):
+Están en la carpeta [`Informes/`](Informes/), en PDF:
 
 | Documento | Contenido |
 |---|---|
-| `1.1_Marco_teorico_y_estado_del_arte` | Conceptos, revisión de 26 fuentes (16 trabajos 2020-2026), tabla comparativa y brechas |
-| `Avance_1.2_Obtencion_y_preparacion_de_datos` | Datos, limpieza, variables y análisis exploratorio |
-| `Avance_1.3_Implementacion_y_entrenamiento_de_modelos` | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
-| `Avance_1.4_Evaluacion_y_seleccion_del_modelo` | Comparación estadística, sesgo de selección y modelo final |
+| [1.1 Marco teórico y estado del arte](Informes/1.1%20Marco%20te%C3%B3rico%20y%20estado%20del%20arte%20marcha%20y%20riesgo%20de%20ca%C3%ADda.pdf) | Conceptos, revisión de 26 fuentes (16 trabajos 2020-2026), tabla comparativa y brechas |
+| [Avance 1.2: obtención y preparación de datos](Informes/Avance_1.2_Obtencion_y_preparacion_de_datos.pdf) | Datos, limpieza, variables y análisis exploratorio |
+| [Avance 1.3: implementación y entrenamiento de modelos](Informes/Avance_1.3_Implementacion_y_entrenamiento_de_modelos.pdf) | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
+| [Avance 1.4: evaluación y selección del modelo](Informes/Avance_1.4_Evaluacion_y_seleccion_del_modelo.pdf) | Comparación estadística, sesgo de selección y modelo final |
+
+La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instalar nada: `01_EDA_LabWalks`, `01b_Vida_diaria`, `02_EDA_CASIA`, `03_laboratorio`, `03_vida_diaria`, `03_combinado`, `04_laboratorio`, `04_vida_diaria`, `04_combinado` y `05_Evaluacion_y_seleccion`.
 
 ## Notebooks
 
@@ -62,7 +64,7 @@ datos/procesados/   dataset limpio, señales limpias, tablas del EDA y vida_diar
 modelos/            modelos entrenados (checkpoints) y su información; modelo_final.joblib es el seleccionado
 resultados/         métricas de validación y tabla comparativa
 figuras/            gráficos para los informes
-informes/           documentos de avance (PDF y Word) y notebooks exportados a HTML
+Informes/           documentos de avance (PDF) y notebooks exportados a HTML
 ```
 
 ## Reproducibilidad
