@@ -51,7 +51,7 @@ El significado de cada columna de los datos está en [`DICCIONARIO_DE_DATOS.md`]
 2. Copiar los datos crudos (no se suben a GitHub):
    - LabWalks: los `.hea` y `.dat` en `datos/crudos/LabWalks/` y `ClinicalDemogData_COFL.xlsx` en `datos/crudos/`. Se descargan con *LabWalks Explorer* o desde <https://physionet.org/content/ltmm/1.0.0/>.
    - Registros de 3 días: los `.hea` y `.dat` de LTMM (unos 20 GB) en `datos/crudos/Physionet/`, desde <https://physionet.org/content/ltmm/1.0.0/>.
-   - CASIA: las siluetas de A, B y C en `datos/crudos/CASIA/`.
+   - CASIA: las siluetas de A, B y C en `datos/crudos/CASIA/`. Se solicitan y descargan desde <http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp>.
 3. Abrir Jupyter (`jupyter lab`) y ejecutar los notebooks **en orden (01 → 01b → 02 → 03 → 04 → 05)** con *Kernel → Restart Kernel and Run All Cells*. Cada uno usa lo que generó el anterior. El 01b tarda unos minutos y guarda a cada persona apenas la termina; si se interrumpe, continúa donde quedó.
 4. Para comparar las fuentes de datos, ejecutar el 03 y luego el 04 una vez con cada valor de `DATOS` (primero las tres del 03). El 05 se ejecuta al final, una sola vez.
 
@@ -200,7 +200,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - J. M. Hausdorff, "Long Term Movement Monitoring Database" (versión 1.0.0), PhysioNet, 2016, doi: 10.13026/C2S59C.
 - A. L. Goldberger *et al.*, "PhysioBank, PhysioToolkit, and PhysioNet," *Circulation*, vol. 101, no. 23, pp. e215–e220, 2000, doi: 10.1161/01.CIR.101.23.e215.
 
-**CASIA Gait Database**
+**CASIA Gait Database** (Institute of Automation, Chinese Academy of Sciences) — <http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp>
 - Base A: L. Wang, T. Tan, H. Ning y W. Hu, "Silhouette analysis-based gait recognition for human identification," *IEEE Trans. Pattern Anal. Mach. Intell.*, vol. 25, no. 12, pp. 1505–1518, 2003.
 - Base B: S. Yu, D. Tan y T. Tan, "A framework for evaluating the effect of view angle, clothing and carrying condition on gait recognition," en *Proc. 18th ICPR*, 2006, vol. 4, pp. 441–444.
 - Base C: D. Tan, K. Huang, S. Yu y T. Tan, "Efficient night gait recognition based on template matching," en *Proc. 18th ICPR*, 2006, vol. 3, pp. 1000–1003.
