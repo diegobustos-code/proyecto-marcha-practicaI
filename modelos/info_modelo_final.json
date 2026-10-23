@@ -1,0 +1,38 @@
+{
+  "fecha": "2026-10-23T00:04:47",
+  "modelo": "1 variable de cámara elegida en cada partición",
+  "tipo": "LogisticRegression",
+  "variables_en_orden": [
+    "frec_dominante_hz"
+  ],
+  "datos_de_entrenamiento": "datos/procesados/labwalks_modelo.csv + labwalks_variables.csv (72 personas)",
+  "etiqueta": "cae (1 = cae, 0 = no cae)",
+  "umbral_tamizaje": 0.3995,
+  "sensibilidad_objetivo": 0.8,
+  "especificidad_con_umbral": 0.468,
+  "validacion": {
+    "exactitud": "0.69 ± 0.12",
+    "sensibilidad": "0.57 ± 0.21",
+    "especificidad": "0.80 ± 0.13",
+    "f1": "0.62 ± 0.17",
+    "auc": "0.72 ± 0.15",
+    "auc_ic95": "[0.57; 0.88]",
+    "pruebas": 50
+  },
+  "criterios": [
+    "variables medibles con cámara, en condiciones de laboratorio",
+    "no significativamente peor que el mejor modelo de laboratorio (prueba t corregida + Holm)",
+    "el más simple de los que cumplen"
+  ],
+  "motivo": "no es significativamente peor que el mejor modelo de laboratorio (1 variable de cámara elegida en cada partición) y es el candidato más simple (1 variable(s))",
+  "mejor_modelo_laboratorio": {
+    "modelo": "1 variable de cámara elegida en cada partición",
+    "auc": 0.724
+  },
+  "versiones": {
+    "python": "3.14.6",
+    "scikit-learn": "1.9.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}

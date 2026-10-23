@@ -1,0 +1,22 @@
+fuente,mejor,modelo,pruebas,diferencia_auc,p,p_holm,peor_que_el_mejor
+laboratorio,1 variable de cámara elegida en cada partición,1 variable elegida en cada partición,50,0.10059523809523808,0.1788367536886454,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,3 variables elegidas en cada partición,50,0.0743154761904762,0.24154957378221328,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,LSTM,15,0.19579081632653056,0.08131879673556561,0.7318691706200905,no
+laboratorio,1 variable de cámara elegida en cada partición,"Logística, variables de cámara",50,0.09063350340136055,0.1565136151379547,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,Random Forest,50,0.04707908163265305,0.5128494832589491,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,"Random Forest, variables de cámara",50,0.06214710884353743,0.3181818362395466,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,Solo TUG,50,0.06641156462585032,0.43063907461440165,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,Solo frecuencia dominante,50,-0.021632653061224492,0.6021134070123026,1.0,no
+laboratorio,1 variable de cámara elegida en cada partición,XGBoost,50,0.07981717687074831,0.350731741908171,1.0,no
+vida_diaria,"Variabilidad entre tramos, Random Forest",LSTM,15,0.005555555555555569,0.9673894384271995,1.0,no
+vida_diaria,"Variabilidad entre tramos, Random Forest",Random Forest,50,0.018750000000000017,0.7690629820630576,1.0,no
+vida_diaria,"Variabilidad entre tramos, Random Forest",Solo TUG,50,0.028541666666666677,0.7286244022668528,1.0,no
+vida_diaria,"Variabilidad entre tramos, Random Forest",Solo frecuencia dominante,50,0.24958333333333335,0.025687227886837898,0.20549782309470319,no
+vida_diaria,"Variabilidad entre tramos, Random Forest","Tramos largos, 3 variables elegidas",50,0.05041666666666668,0.4877007214218299,1.0,no
+vida_diaria,"Variabilidad entre tramos, Random Forest","Tramos largos, Random Forest",50,0.13166666666666668,0.052366462059477564,0.3141987723568654,no
+vida_diaria,"Variabilidad entre tramos, Random Forest","Variabilidad entre tramos, 3 variables elegidas",50,0.17791666666666667,0.02712023547878199,0.20549782309470319,no
+vida_diaria,"Variabilidad entre tramos, Random Forest",XGBoost,50,0.031666666666666676,0.6018588490596273,1.0,no
+combinado,Solo TUG,LSTM,15,0.06063492063492063,0.5531035654830966,1.0,no
+combinado,Solo TUG,Random Forest,50,0.009714285714285724,0.9160491073433908,1.0,no
+combinado,Solo TUG,Solo frecuencia dominante,50,-0.075,0.4053975448901927,1.0,no
+combinado,Solo TUG,XGBoost,50,0.07961904761904762,0.40313519745722837,1.0,no

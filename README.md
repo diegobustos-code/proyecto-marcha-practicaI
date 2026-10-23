@@ -11,6 +11,7 @@ Línea 1, Proyecto 1 · Ingeniería Civil Eléctrica, UNAB
 | `notebooks/02_EDA_CASIA.ipynb` | 1.2 | Revisa las siluetas de CASIA A, B y C: inventario, completitud, calidad y cadencia estimada desde la imagen. |
 | `notebooks/03_Modelos_RF_XGBoost.ipynb` | 1.3 | Entrena y valida Random Forest y XGBoost, y los compara con tres referencias simples (sin modelo, una variable y TUG). |
 | `notebooks/04_Modelo_LSTM.ipynb` | 1.3 | Entrena y valida una red CNN + LSTM con las señales, y compara los tres modelos en las mismas particiones. |
+| `notebooks/05_Evaluacion_y_seleccion.ipynb` | 1.4 | Junta todos los resultados, los compara con la prueba t corregida para validación cruzada, evalúa los análisis definidos de antemano y selecciona el modelo final para la Etapa 2. |
 
 En los notebooks 03 y 04, el parámetro `DATOS` de la configuración elige los datos de entrada: `"laboratorio"` (caminatas de 1 minuto), `"vida_diaria"` (registros de 3 días) o `"combinado"` (ambos). Los resultados de cada opción se guardan con su nombre al final (por ejemplo `metricas_modelos_vida_diaria.csv`) y no se sobrescriben.
 
@@ -26,8 +27,8 @@ El significado de cada columna de los datos está en [`DICCIONARIO_DE_DATOS.md`]
    - LabWalks: los `.hea` y `.dat` en `datos/crudos/LabWalks/` y `ClinicalDemogData_COFL.xlsx` en `datos/crudos/`. Se descargan con *LabWalks Explorer* o desde <https://physionet.org/content/ltmm/1.0.0/>.
    - Registros de 3 días: los `.hea` y `.dat` de LTMM (unos 20 GB) en `datos/crudos/Physionet/`, desde <https://physionet.org/content/ltmm/1.0.0/>.
    - CASIA: las siluetas de A, B y C en `datos/crudos/CASIA/`.
-3. Abrir Jupyter (`jupyter lab`) y ejecutar los notebooks **en orden (01 → 01b → 02 → 03 → 04)** con *Kernel → Restart Kernel and Run All Cells*. Cada uno usa lo que generó el anterior. El 01b tarda unos minutos y guarda a cada persona apenas la termina; si se interrumpe, continúa donde quedó.
-4. Para comparar las fuentes de datos, ejecutar el 03 y luego el 04 una vez con cada valor de `DATOS` (primero las tres del 03).
+3. Abrir Jupyter (`jupyter lab`) y ejecutar los notebooks **en orden (01 → 01b → 02 → 03 → 04 → 05)** con *Kernel → Restart Kernel and Run All Cells*. Cada uno usa lo que generó el anterior. El 01b tarda unos minutos y guarda a cada persona apenas la termina; si se interrumpe, continúa donde quedó.
+4. Para comparar las fuentes de datos, ejecutar el 03 y luego el 04 una vez con cada valor de `DATOS` (primero las tres del 03). El 05 se ejecuta al final, una sola vez.
 
 ## Estructura
 
@@ -101,11 +102,29 @@ informes/           documentos de avance (PDF) y resultados notebooks
 - Para la LSTM se usan como máximo 60 ventanas por persona, para que quienes caminan más no dominen el entrenamiento.
 - Las señales de vida diaria (`datos/procesados/vida_diaria/senales/`) no se suben a GitHub; se regeneran con el 01b.
 
-**Pendiente (sub-etapa 1.4)**
-- Comparación formal de los modelos partición por partición y selección del modelo final.
-- Probar modelos con menos variables, eligiéndolas dentro de la validación cruzada.
-- Vida diaria: probar pocas variantes definidas de antemano (variabilidad entre tramos, solo tramos largos).
-- Limitación a reportar: el detector reconoce peor la marcha más irregular (8 caminatas de laboratorio bajo 80 %, casi todas de personas que caen).
+**Limitación a reportar:** el detector reconoce peor la marcha más irregular (8 caminatas de laboratorio bajo 80 %, casi todas de personas que caen).
+
+### Semanas 10-11 · Sub-etapa 1.4: evaluación y selección del modelo
+
+**Avanzado**
+- Notebook `05_Evaluacion_y_seleccion.ipynb`: 27 combinaciones de modelo y fuente de datos, con la prueba t corregida de Nadeau y Bengio (2003) + Holm e intervalos de confianza del AUC.
+- Siete modelos nuevos, definidos antes de ver los resultados: selección de variables dentro de cada partición, modelos con variables medibles con cámara y dos variantes de vida diaria.
+- Tabla comparativa (`resultados/tabla_comparativa.csv`), modelo final (`modelos/modelo_final.joblib`) y avance 1.4 (informe de selección).
+
+**Resultados**
+- Ningún modelo es significativamente peor que el mejor de su fuente: los intervalos del AUC miden unos ±0,15 y se superponen.
+- Sesgo de selección: la frecuencia dominante elegida en el EDA daba AUC 0,75; eligiendo la variable dentro de cada partición entre todas, 0,62; entre las de cámara, 0,72 (elige la frecuencia dominante en 46 de 50 particiones).
+- Las variantes de vida diaria no mejoran (mejor: variabilidad entre tramos con Random Forest, 0,64).
+- **Modelo seleccionado:** regresión logística con la frecuencia dominante. AUC 0,72 (IC 95 %: 0,57 a 0,88); coeficiente −0,87 (menor frecuencia = más riesgo). Con umbral 0,40: sensibilidad ≥ 80 % y especificidad 0,47.
+
+**Decisiones**
+- Criterios de selección fijados de antemano: (1) variables medibles con cámara en condiciones de laboratorio, como en la Etapa 2; (2) no ser significativamente peor que el mejor; (3) el más simple.
+- La referencia elegida en el EDA no se usa como punto de comparación, porque su AUC está inflado.
+- Umbral de tamizaje elegido para sensibilidad ≥ 80 % (importa más no dejar pasar a quien cae).
+
+**Pendiente**
+- Sub-etapa 1.5: artículo en plantilla IEEE (benchmark honesto, sesgo de selección y resultado negativo de la vida diaria).
+- Etapa 2: medir la frecuencia dominante con MediaPipe, compararla con la del sensor y recalibrar el umbral.
 
 ## Fuentes de datos
 
