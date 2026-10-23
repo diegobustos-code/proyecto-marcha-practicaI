@@ -2,6 +2,29 @@
 
 Línea 1, Proyecto 1 · Ingeniería Civil Eléctrica, UNAB
 
+Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (PhysioNet LTMM y CASIA) y aprendizaje automático (Random Forest, XGBoost y LSTM). La Etapa 1 construye y compara los modelos; la Etapa 2 llevará el modelo seleccionado a un prototipo con cámara y Raspberry Pi.
+
+## Estado del proyecto
+
+| Sub-etapa | Semanas | Producto | Estado |
+|---|---|---|---|
+| 1.1 Marco teórico y estado del arte | 1-3 | Síntesis bibliográfica con tabla comparativa | ✅ |
+| 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ |
+| 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ |
+| 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Pendiente |
+
+## Documentos de avance
+
+Están en `informes/` (PDF y Word):
+
+| Documento | Contenido |
+|---|---|
+| `1.1_Marco_teorico_y_estado_del_arte` | Conceptos, revisión de 26 fuentes (16 trabajos 2020-2026), tabla comparativa y brechas |
+| `Avance_1.2_Obtencion_y_preparacion_de_datos` | Datos, limpieza, variables y análisis exploratorio |
+| `Avance_1.3_Implementacion_y_entrenamiento_de_modelos` | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
+| `Avance_1.4_Evaluacion_y_seleccion_del_modelo` | Comparación estadística, sesgo de selección y modelo final |
+
 ## Notebooks
 
 | Notebook | Sub-etapa | Qué hace |
@@ -20,9 +43,9 @@ El significado de cada columna de los datos está en [`DICCIONARIO_DE_DATOS.md`]
 ## Cómo ejecutarlo
 
 1. Instalar las librerías (una vez, en la terminal de Anaconda, dentro de esta carpeta):
-```
+   ```
    pip install -r requirements.txt
-```
+   ```
 2. Copiar los datos crudos (no se suben a GitHub):
    - LabWalks: los `.hea` y `.dat` en `datos/crudos/LabWalks/` y `ClinicalDemogData_COFL.xlsx` en `datos/crudos/`. Se descargan con *LabWalks Explorer* o desde <https://physionet.org/content/ltmm/1.0.0/>.
    - Registros de 3 días: los `.hea` y `.dat` de LTMM (unos 20 GB) en `datos/crudos/Physionet/`, desde <https://physionet.org/content/ltmm/1.0.0/>.
@@ -36,10 +59,10 @@ El significado de cada columna de los datos está en [`DICCIONARIO_DE_DATOS.md`]
 notebooks/          notebooks de análisis y modelos
 datos/crudos/       datos originales (no se suben)
 datos/procesados/   dataset limpio, señales limpias, tablas del EDA y vida_diaria/ (tramos por persona)
-modelos/            modelos entrenados (checkpoints) y su información
-resultados/         métricas de validación de los modelos
+modelos/            modelos entrenados (checkpoints) y su información; modelo_final.joblib es el seleccionado
+resultados/         métricas de validación y tabla comparativa
 figuras/            gráficos para los informes
-informes/           documentos de avance (PDF) y resultados notebooks
+informes/           documentos de avance (PDF y Word) y notebooks exportados a HTML
 ```
 
 ## Reproducibilidad
@@ -47,8 +70,50 @@ informes/           documentos de avance (PDF) y resultados notebooks
 - Semilla fija `SEMILLA = 42` en todos los notebooks.
 - Los parámetros de cada etapa están al inicio de cada notebook.
 - Cada modelo guardado tiene un archivo `.json` con sus variables de entrada, parámetros, métricas y versiones de las librerías.
+- Los análisis de la sub-etapa 1.4 y los criterios de selección se fijaron antes de ver sus resultados (están escritos al inicio del notebook 05).
+
+## Estado del arte (resumen de la sub-etapa 1.1)
+
+La literatura muestra que la marcha permite clasificar el riesgo de caída: el metaanálisis de Mou *et al.* (2026, 20 estudios) reporta un AUC combinado de 0,85 con sensores vestibles, pero con sensibilidad moderada (0,55) y resultados más altos en estudios con menos de 100 participantes. Tabla comparativa de los estudios experimentales revisados (detalle y referencias completas en el documento 1.1):
+
+| Estudio | Año | Participantes | Sensor | Modelo | Resultado principal | Etiqueta |
+|---|---|---|---|---|---|---|
+| Weiss *et al.* | 2013 | 71 adultos mayores | Acelerómetro lumbar, 3 días | Comparación estadística | Menor regularidad de la marcha en quienes caen | Retrospectiva + seguimiento 6 meses |
+| Kiprijanovska *et al.* | 2020 | 18 voluntarios | Relojes inteligentes | CNN + LSTM bidireccional | Exactitud 88,9 % | Marcha alterada simulada |
+| Ng *et al.* | 2020 | 31 adultos mayores con demencia | Cámara + estimación de pose | Asociación | Variables asociadas a caídas futuras | Prospectiva |
+| Noh *et al.* | 2021 | 746 adultos mayores | IMU en ambos zapatos | XGBoost | Exactitud 67-70 %, sensibilidad 43-53 % | Retrospectiva |
+| Lockhart *et al.* | 2021 | 171 adultos mayores | IMU en el esternón | Random Forest | Exactitud 81,6 %, sensibilidad 86,7 % | Prospectiva, 6 meses |
+| Altunkaya | 2024 | 71 adultos mayores (LTMM) | Acelerómetro en la cintura, 1 min | Red neuronal multicapa | Exactitud 82,2 %, sensibilidad 82,9 % | Retrospectiva |
+| Lim *et al.* | 2024 | 65 personas (jóvenes y mayores) | Dos cámaras + pose | LightGBM y MLP | Exactitud 96 % (una sola división) | Escalas clínicas |
+| García-de-Villa *et al.* | 2025 | 157 mayores de 70 años | IMU en el pie | Máquina de vectores de soporte | Exactitud 79,6 % | Retrospectiva |
+| Sakane *et al.* | 2025 | 190 trabajadores de mediana edad | Cámara RGB + MediaPipe | Aprendizaje automático | AUC 0,909 (hombres) y 0,670 (mujeres) | Retrospectiva |
+| Alqurashi *et al.* | 2026 | 163 personas de 70 a 98 años | IMU | CNN y LSTM | Exactitud 87-92 % validando por sujeto | Retrospectiva |
+| **Este proyecto** | 2026 | 72 adultos mayores (LTMM) | Acelerómetro lumbar, 1 min | Regresión logística (1 variable) | **AUC 0,72** (IC 95 %: 0,57-0,88), exactitud 69 %; validación cruzada 5 × 10 por sujeto | Retrospectiva |
+
+**Brechas identificadas** y cómo las aborda el proyecto:
+
+1. **Etiquetas retrospectivas** → se reconoce como limitación (LTMM solo tiene caídas del año anterior).
+2. **Validación poco rigurosa** → validación cruzada repetida separando por persona, prueba t corregida y selección de variables dentro de cada partición (sub-etapa 1.4).
+3. **Sensibilidad baja** → se reportan sensibilidad y especificidad, y se fija un umbral de tamizaje con sensibilidad ≥ 80 %.
+4. **Falta de estandarización** → se documentan sensor, frecuencia de muestreo, limpieza y variables (`DICCIONARIO_DE_DATOS.md`).
+5. **Pocos estudios con cámara en adultos mayores** → el modelo final usa solo variables medibles con cámara, como base para la Etapa 2.
 
 ## Bitácora
+
+### Semanas 1-3 · Sub-etapa 1.1: marco teórico y estado del arte
+
+**Avanzado**
+- Marco teórico: parámetros de marcha, sensores inerciales y estimación de pose, Random Forest, XGBoost y LSTM, métricas y validación.
+- Revisión de 26 fuentes, de las cuales 16 son trabajos científicos publicados entre 2020 y 2026, incluidos tres metaanálisis o revisiones sistemáticas.
+- Tabla comparativa de 10 estudios experimentales (participantes, sensor, modelo, resultado y tipo de etiqueta).
+- Cinco brechas identificadas: etiquetas retrospectivas, validación poco rigurosa, sensibilidad baja, falta de estandarización y pocos estudios con cámara en adultos mayores.
+
+**Decisiones**
+- Base de datos: LTMM (PhysioNet), porque es abierta y tiene etiquetas de caída; se reconoce que son retrospectivas y que la muestra es pequeña (71 personas).
+- Variables: parámetros espaciotemporales más medidas de variabilidad y regularidad (siguiendo a Weiss *et al.*).
+- Validación cruzada separando por sujeto (Saeb *et al.*, Alqurashi *et al.*), con exactitud, sensibilidad, F1 y AUC.
+- Referencias de comparación: Altunkaya (mismas caminatas de LTMM), un método simple de una variable y el TUG.
+- CASIA no sirve para entrenar (no tiene etiquetas de caída); puede servir para probar la estimación de pose.
 
 ### Semanas 4-5 · Sub-etapa 1.2: obtención y preparación de datos
 
@@ -82,7 +147,7 @@ informes/           documentos de avance (PDF) y resultados notebooks
 - Se agregaron dos capas convolucionales antes de la LSTM, porque una LSTM sola sobre la señal cruda no aprendía.
 - La red entrena al menos 40 épocas antes de aplicar la parada temprana.
 
-### 22-10-2026 · Extensión de la 1.3: registros de 3 días de vida diaria
+### Extensión de la 1.3 (22-10-2026): registros de 3 días de vida diaria
 
 **Avanzado**
 - Descarga de los registros de 3 días de LTMM (71 registros, unos 20 GB, mediana de 74 h cada uno).
@@ -94,7 +159,7 @@ informes/           documentos de avance (PDF) y resultados notebooks
 - Ninguna variable de vida diaria es significativa tras Holm. Las mayores diferencias: quienes caen tienen menor amplitud dominante (r = −0,31) y caminan algo menos (22,6 vs 28,1 min/día, no significativo).
 - El ritmo de la marcha se parece entre laboratorio y casa (cadencia ρ = 0,62), pero la variabilidad casi no (CV ρ ≈ 0,2).
 - AUC en las mismas 15 pruebas (laboratorio / vida diaria / combinado): Random Forest 0,68 / 0,60 / 0,64 · XGBoost 0,67 / 0,60 / 0,58 · LSTM 0,55 / 0,62 / 0,57 · solo frecuencia dominante 0,75 / 0,38 / 0,71.
-- Los registros de 3 días **no mejoran la clasificación** con estas variables (resultado negativo; las diferencias están dentro de la variación de ±0,15). La mejor referencia sigue siendo la frecuencia dominante de laboratorio.
+- Los registros de 3 días **no mejoran la clasificación** con estas variables (resultado negativo; las diferencias están dentro de la variación de ±0,15).
 
 **Decisiones**
 - El detector se calibró con las caminatas de laboratorio, donde se sabe que la persona camina: el umbral de ritmo de pasos bajó de 0,50 a 0,29 y las caminatas bajo 80 % detectado pasaron de 27 a 8. La calibración solo relaja los umbrales.
@@ -137,3 +202,15 @@ informes/           documentos de avance (PDF) y resultados notebooks
 - Base A: L. Wang, T. Tan, H. Ning y W. Hu, "Silhouette analysis-based gait recognition for human identification," *IEEE Trans. Pattern Anal. Mach. Intell.*, vol. 25, no. 12, pp. 1505–1518, 2003.
 - Base B: S. Yu, D. Tan y T. Tan, "A framework for evaluating the effect of view angle, clothing and carrying condition on gait recognition," en *Proc. 18th ICPR*, 2006, vol. 4, pp. 441–444.
 - Base C: D. Tan, K. Huang, S. Yu y T. Tan, "Efficient night gait recognition based on template matching," en *Proc. 18th ICPR*, 2006, vol. 3, pp. 1000–1003.
+
+## Fuentes adicionales usadas después de la sub-etapa 1.1
+
+La bibliografía completa del estado del arte (26 fuentes) está en el documento 1.1. Además, en las sub-etapas 1.2 a 1.4 se usaron:
+
+- R. Moe-Nilssen y J. L. Helbostad, "Estimation of gait cycle characteristics by trunk accelerometry," *J. Biomech.*, vol. 37, no. 1, pp. 121–126, 2004 (regularidad y simetría por autocorrelación, sub-etapa 1.2).
+- S. Holm, "A simple sequentially rejective multiple test procedure," *Scand. J. Statist.*, vol. 6, no. 2, pp. 65–70, 1979 (corrección por comparaciones múltiples).
+- F. Pedregosa *et al.*, "Scikit-learn: Machine learning in Python," *J. Mach. Learn. Res.*, vol. 12, pp. 2825–2830, 2011.
+- A. Paszke *et al.*, "PyTorch: An imperative style, high-performance deep learning library," en *Adv. Neural Inf. Process. Syst. 32*, 2019, pp. 8024–8035.
+- C. Nadeau y Y. Bengio, "Inference for the generalization error," *Mach. Learn.*, vol. 52, no. 3, pp. 239–281, 2003 (prueba t corregida, sub-etapa 1.4).
+- R. R. Bouckaert y E. Frank, "Evaluating the replicability of significance tests for comparing learning algorithms," en *PAKDD 2004*, LNCS vol. 3056, pp. 3–12 (sub-etapa 1.4).
+- C. Ambroise y G. J. McLachlan, "Selection bias in gene extraction on the basis of microarray gene-expression data," *Proc. Natl. Acad. Sci. USA*, vol. 99, no. 10, pp. 6562–6566, 2002 (sesgo de selección de variables, sub-etapa 1.4).
