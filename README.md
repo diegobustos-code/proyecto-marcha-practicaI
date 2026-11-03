@@ -22,7 +22,7 @@ Están en la carpeta [`Informes/`](Informes/), en PDF:
 
 | Documento | Contenido |
 |---|---|
-| [1.1 Marco teórico y estado del arte](Informes/1.1%20Marco%20te%C3%B3rico%20y%20estado%20del%20arte%20marcha%20y%20riesgo%20de%20ca%C3%ADda.pdf) | Conceptos, revisión de 26 fuentes (16 trabajos 2020-2026), tabla comparativa y brechas |
+| [1.1 Marco teórico y estado del arte](Informes/1.1%20Marco%20te%C3%B3rico%20y%20estado%20del%20arte%20marcha%20y%20riesgo%20de%20ca%C3%ADda.pdf) | Conceptos, revisión de 34 fuentes (14 estudios experimentales de 2020 a 2026), tablas comparativas y brechas (versión 2) |
 | [Avance 1.2: obtención y preparación de datos](Informes/Avance_1.2_Obtencion_y_preparacion_de_datos.pdf) | Datos, limpieza, variables y análisis exploratorio |
 | [Avance 1.3: implementación y entrenamiento de modelos](Informes/Avance_1.3_Implementacion_y_entrenamiento_de_modelos.pdf) | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
 | [Avance 1.4: evaluación y selección del modelo](Informes/Avance_1.4_Evaluacion_y_seleccion_del_modelo.pdf) | Comparación estadística, sesgo de selección y modelo final |
@@ -249,10 +249,17 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - **Calibración:** puntaje de Brier 0,216, frente a 0,249 de un modelo que siempre predice la proporción de caedores.
 - Se fijaron las versiones en `requirements.txt` (13 paquetes; Python 3.14.6, scikit-learn 1.9.0, XGBoost 3.4.1).
 
+**Correcciones de los informes (03-11-2026)**
+- **1.1 (versión 2):** método de búsqueda (falta completar bases, palabras clave y fechas), cinco estudios experimentales más (Buisseret 2020, Wang 2023, Robles Cruz 2024, Neira Álvarez 2024 y Askhatova 2026), nueva Tabla II con datos, validación y métricas de cada estudio, cifra de caídas en Chile (SABE, Santiago 34,0 %), aclaración de 71 y 73 personas en LTMM, G-STRIDE como base para validación externa, Barry *et al.* en lugar de Bargiotas *et al.* para el TUG y corrección de la promesa de calcular largo de zancada y velocidad.
+- **1.2 (versión 2):** URL del repositorio, señales limpias de la LSTM documentadas, cambio respecto del plan (sin velocidad ni largo de zancada), filtro de redundancia aplicado a todas las personas, posible efecto de la duración de las caminatas y redacción más prudente sobre CASIA (la cadencia es coherente, no validada; las siluetas no sirven para MediaPipe).
+- **1.3 (versión 3):** tabla de correspondencia de personas entre fuentes (incluidos los archivos CO028_n, CO029_n y CO038_2), explicación del AUC de 0,38, épocas de la LSTM final y límites de la parada temprana, tratamiento de las 4 personas sin TUG, sesgo del detector calibrado con las mismas personas y alcance de la extensión.
+- **1.4 (versión 2):** "numéricamente mayor, sin diferencias significativas", comparación con el azar y con el TUG, umbral en Hz, umbral elegido sin mirar la prueba, matriz de confusión, calibración, velocidad, columna de 6 meses y sesgos declarados.
+- **Artículo 1.5:** resultados del 05b, sesgos declarados y Etapa 2 replanteada.
+
 **Pendiente**
-- Actualizar los informes 1.3 y 1.4: correspondencia de personas entre fuentes (incluidos CO028_n, CO029_n y CO038_2), explicación del AUC de 0,38 en vida diaria, épocas de la LSTM final, cómo se trataron las 4 personas sin TUG y la frase "mayor que" del resumen del 1.4.
-- Completar la Tabla I del 1.1 (dataset, validación y métricas), sumar unos 5 estudios experimentales de 2020 a 2026 y agregar el método de búsqueda bibliográfica.
-- Actualizar el artículo: suavizar "fijado de antemano", incorporar los resultados del 05b y declarar los sesgos señalados (filtro de redundancia aplicado a todos, detector calibrado con las mismas personas, umbral sin conjunto independiente, diferencia de duración entre grupos).
+- Completar en el informe 1.1 las bases consultadas, las palabras clave y las fechas de la búsqueda.
+- Control de duración: recortar todas las caminatas a la misma duración y repetir el análisis (notebook 05c, con su plan subido antes de ejecutarlo).
+- Aprobación por escrito del profesor guía de los cambios respecto del plan.
 - Etapa 2: conseguir video RGB y replantear las sub-etapas 2.1 y 2.2 con foco en validar la frecuencia dominante medida con cámara contra un sensor inercial en las mismas personas.
 
 ## Fuentes de datos
