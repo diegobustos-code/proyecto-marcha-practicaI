@@ -12,7 +12,7 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 | 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Revisado, con observaciones |
 | 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Revisado, con observaciones |
 | 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Revisado, con observaciones (análisis complementarios en el notebook 05b) |
-| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador listo; se actualizará con las correcciones de la revisión |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador listo, en revisión con el profesor guía (aún no se publica en el repositorio) |
 
 La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), y lo que se hizo con cada observación están en la bitácora.
 
@@ -26,7 +26,6 @@ Están en la carpeta [`Informes/`](Informes/), en PDF:
 | [Avance 1.2: obtención y preparación de datos](Informes/Avance_1.2_Obtencion_y_preparacion_de_datos.pdf) | Datos, limpieza, variables y análisis exploratorio |
 | [Avance 1.3: implementación y entrenamiento de modelos](Informes/Avance_1.3_Implementacion_y_entrenamiento_de_modelos.pdf) | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
 | [Avance 1.4: evaluación y selección del modelo](Informes/Avance_1.4_Evaluacion_y_seleccion_del_modelo.pdf) | Comparación estadística, sesgo de selección y modelo final |
-| [Artículo 1.5 (inglés)](Informes/Paper_1.5_Fall_risk_benchmark_IEEE.pdf) · [versión en español](Informes/Paper_1.5_Riesgo_de_caida_IEEE_espanol.pdf) | Borrador del artículo en formato IEEE (los proyectos para Overleaf están en los `.zip` de la misma carpeta) |
 
 La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instalar nada: `01_EDA_LabWalks`, `01b_Vida_diaria`, `02_EDA_CASIA`, `03_laboratorio`, `03_vida_diaria`, `03_combinado`, `04_laboratorio`, `04_vida_diaria`, `04_combinado`, `05_Evaluacion_y_seleccion` y `05b_Respuesta_revision`.
 
@@ -198,7 +197,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 ### Semanas 12-14 · Sub-etapa 1.5: artículo metodológico (adelantada)
 
 **Avanzado**
-- Borrador del artículo en plantilla IEEE, en inglés (7 páginas) y en español (8 páginas), con sus proyectos para Overleaf.
+- Borrador del artículo en plantilla IEEE, en inglés y en español (8 páginas cada uno), con sus proyectos para Overleaf. Se comparte con el profesor guía y se subirá al repositorio cuando se decida publicarlo.
 - Se verificaron las 46 referencias contra su fuente original (autores, revista, volumen, páginas y DOI).
 - Se revisó que estuvieran todos los productos de la Etapa 1 pedidos en el plan.
 - Se contrastaron los resultados con literatura fuera de la bibliografía del 1.1 y se agregaron nueve referencias (ver *Fuentes adicionales*).
