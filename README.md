@@ -12,7 +12,7 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 | 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Revisado, con observaciones |
 | 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Revisado, con observaciones |
 | 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Revisado, con observaciones (análisis complementarios en el notebook 05b) |
-| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador listo; se actualizará con las correcciones de la revisión |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador listo, en revisión con el profesor guía (aún no se publica en el repositorio) |
 
 La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), y lo que se hizo con cada observación están en la bitácora.
 
@@ -26,7 +26,6 @@ Están en la carpeta [`Informes/`](Informes/), en PDF:
 | [Avance 1.2: obtención y preparación de datos](Informes/Avance_1.2_Obtencion_y_preparacion_de_datos.pdf) | Datos, limpieza, variables y análisis exploratorio |
 | [Avance 1.3: implementación y entrenamiento de modelos](Informes/Avance_1.3_Implementacion_y_entrenamiento_de_modelos.pdf) | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
 | [Avance 1.4: evaluación y selección del modelo](Informes/Avance_1.4_Evaluacion_y_seleccion_del_modelo.pdf) | Comparación estadística, sesgo de selección y modelo final |
-| [Artículo 1.5 (inglés)](Informes/Paper_1.5_Fall_risk_benchmark_IEEE.pdf) · [versión en español](Informes/Paper_1.5_Riesgo_de_caida_IEEE_espanol.pdf) | Borrador del artículo en formato IEEE (los proyectos para Overleaf están en los `.zip` de la misma carpeta) |
 
 La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instalar nada: `01_EDA_LabWalks`, `01b_Vida_diaria`, `02_EDA_CASIA`, `03_laboratorio`, `03_vida_diaria`, `03_combinado`, `04_laboratorio`, `04_vida_diaria`, `04_combinado`, `05_Evaluacion_y_seleccion` y `05b_Respuesta_revision`.
 
@@ -41,6 +40,7 @@ La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instala
 | `notebooks/04_Modelo_LSTM.ipynb` | 1.3 | Entrena y valida una red CNN + LSTM con las señales, y compara los tres modelos en las mismas particiones. |
 | `notebooks/05_Evaluacion_y_seleccion.ipynb` | 1.4 | Junta todos los resultados, los compara con la prueba t corregida para validación cruzada, evalúa los análisis definidos de antemano y selecciona el modelo final para la Etapa 2. |
 | `notebooks/05b_Respuesta_revision.ipynb` | 1.4 (complemento) | Responde a la revisión del profesor guía sin modificar los notebooks anteriores: versiones exactas (`requirements.txt`), columna "6 Months Fall", referencia "solo velocidad", comparación en las mismas personas, modelo elegido contra el azar y contra el TUG, umbral en Hz, matriz de confusión y calibración. |
+| `notebooks/05c_Control_duracion.ipynb` | 1.4 (complemento) | Control pedido en la revisión: recorta todas las caminatas a la misma duración, recalcula las variables con las funciones del notebook 01 y repite el análisis exploratorio y los modelos principales en las mismas 50 particiones. Necesita las señales limpias del notebook 01, que no se suben a GitHub. |
 
 En los notebooks 03 y 04, el parámetro `DATOS` de la configuración elige los datos de entrada: `"laboratorio"` (caminatas de 1 minuto), `"vida_diaria"` (registros de 3 días) o `"combinado"` (ambos). Los resultados de cada opción se guardan con su nombre al final (por ejemplo `metricas_modelos_vida_diaria.csv`) y no se sobrescriben.
 
@@ -57,8 +57,8 @@ El significado de cada columna de los datos está en [`DICCIONARIO_DE_DATOS.md`]
    - LabWalks: los `.hea` y `.dat` en `datos/crudos/LabWalks/` y `ClinicalDemogData_COFL.xlsx` en `datos/crudos/`. Se descargan con *LabWalks Explorer* o desde <https://physionet.org/content/ltmm/1.0.0/>.
    - Registros de 3 días: los `.hea` y `.dat` de LTMM (unos 20 GB) en `datos/crudos/Physionet/`, desde <https://physionet.org/content/ltmm/1.0.0/>.
    - CASIA: las siluetas de A, B y C en `datos/crudos/CASIA/`. Se solicitan y descargan desde <http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp>.
-3. Abrir Jupyter (`jupyter lab`) y ejecutar los notebooks **en orden (01 → 01b → 02 → 03 → 04 → 05 → 05b)** con *Kernel → Restart Kernel and Run All Cells*. Cada uno usa lo que generó el anterior. El 01b tarda unos minutos y guarda a cada persona apenas la termina; si se interrumpe, continúa donde quedó.
-4. Para comparar las fuentes de datos, ejecutar el 03 y luego el 04 una vez con cada valor de `DATOS` (primero las tres del 03). El 05 y el 05b se ejecutan al final, una sola vez cada uno.
+3. Abrir Jupyter (`jupyter lab`) y ejecutar los notebooks **en orden (01 → 01b → 02 → 03 → 04 → 05 → 05b → 05c)** con *Kernel → Restart Kernel and Run All Cells*. Cada uno usa lo que generó el anterior. El 01b tarda unos minutos y guarda a cada persona apenas la termina; si se interrumpe, continúa donde quedó.
+4. Para comparar las fuentes de datos, ejecutar el 03 y luego el 04 una vez con cada valor de `DATOS` (primero las tres del 03). El 05, el 05b y el 05c se ejecutan al final, una sola vez cada uno.
 
 ## Estructura
 
@@ -198,7 +198,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 ### Semanas 12-14 · Sub-etapa 1.5: artículo metodológico (adelantada)
 
 **Avanzado**
-- Borrador del artículo en plantilla IEEE, en inglés (7 páginas) y en español (8 páginas), con sus proyectos para Overleaf.
+- Borrador del artículo en plantilla IEEE, en inglés y en español (8 páginas cada uno), con sus proyectos para Overleaf. Se comparte con el profesor guía y se subirá al repositorio cuando se decida publicarlo.
 - Se verificaron las 46 referencias contra su fuente original (autores, revista, volumen, páginas y DOI).
 - Se revisó que estuvieran todos los productos de la Etapa 1 pedidos en el plan.
 - Se contrastaron los resultados con literatura fuera de la bibliografía del 1.1 y se agregaron nueve referencias (ver *Fuentes adicionales*).
@@ -256,9 +256,14 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - **1.4 (versión 2):** "numéricamente mayor, sin diferencias significativas", comparación con el azar y con el TUG, umbral en Hz, umbral elegido sin mirar la prueba, matriz de confusión, calibración, velocidad, columna de 6 meses y sesgos declarados.
 - **Artículo 1.5:** resultados del 05b, sesgos declarados y Etapa 2 replanteada.
 
+**Avances sobre lo pendiente (03-11-2026)**
+- **Método de búsqueda del 1.1:** completado.
+- **Estatura (1.2, punto 3):** la planilla clínica no trae estatura ni peso, así que el largo de paso no se puede estimar con el modelo de péndulo invertido. Se cierra como limitación. La planilla sí trae una segunda velocidad, `s3(velocity)`, que no se ha usado.
+- **Video RGB (Etapa 2):** CASIA B entrega, además de las siluetas, los archivos de video originales. Hay que solicitarlos y descargarlos; servirán para probar MediaPipe, aunque sin una medida de referencia de la marcha.
+- **Control de duración (1.2, punto 4):** notebook `05c_Control_duracion.ipynb`, con su plan escrito antes de ejecutarlo.
+
 **Pendiente**
-- Completar en el informe 1.1 las bases consultadas, las palabras clave y las fechas de la búsqueda.
-- Control de duración: recortar todas las caminatas a la misma duración y repetir el análisis (notebook 05c, con su plan subido antes de ejecutarlo).
+- Ejecutar el notebook 05c y registrar aquí sus resultados.
 - Aprobación por escrito del profesor guía de los cambios respecto del plan.
 - Etapa 2: conseguir video RGB y replantear las sub-etapas 2.1 y 2.2 con foco en validar la frecuencia dominante medida con cámara contra un sensor inercial en las mismas personas.
 
