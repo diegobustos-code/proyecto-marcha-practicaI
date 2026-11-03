@@ -1,12 +1,15 @@
-numpy
-pandas
-scipy
-matplotlib
-wfdb
-openpyxl
-opencv-python
-jupyterlab
-scikit-learn
-xgboost
-joblib
-torch
+# Versiones con que se obtuvieron los resultados (Python 3.14.6)
+# Generado por notebooks/05b_Respuesta_revision.ipynb el 2026-11-03
+numpy==2.4.6
+pandas==3.0.3
+scipy==1.18.0
+scikit-learn==1.9.0
+xgboost==3.4.1
+torch==2.14.1
+matplotlib==3.11.0
+wfdb==4.3.1
+joblib==1.5.3
+openpyxl==3.1.5
+nbformat==5.10.4
+notebook==7.5.7
+ipykernel==6.31.0
