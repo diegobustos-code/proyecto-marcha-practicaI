@@ -257,13 +257,13 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - **Artículo 1.5:** resultados del 05b, sesgos declarados y Etapa 2 replanteada.
 
 **Avances sobre lo pendiente (03-11-2026)**
-- **Método de búsqueda del 1.1:** completado.
+- **Método de búsqueda del 1.1:** completado; falta consignar en el informe las bases consultadas, las palabras clave y las fechas de la búsqueda.
 - **Estatura (1.2, punto 3):** la planilla clínica no trae estatura ni peso, así que el largo de paso no se puede estimar con el modelo de péndulo invertido. Se cierra como limitación. La planilla sí trae una segunda velocidad, `s3(velocity)`, que no se ha usado.
 - **Video RGB (Etapa 2):** CASIA B entrega, además de las siluetas, los archivos de video originales. Hay que solicitarlos y descargarlos; servirán para probar MediaPipe, aunque sin una medida de referencia de la marcha.
 - **Control de duración (1.2, punto 4):** notebook `05c_Control_duracion.ipynb`, con su plan escrito antes de ejecutarlo.
 
 **Pendiente**
-- Ejecutar el notebook 05c y registrar aquí sus resultados.
+- Ejecutar el notebook 05c: recortar todas las caminatas a la misma duración, repetir el análisis y registrar aquí sus resultados.
 - Aprobación por escrito del profesor guía de los cambios respecto del plan.
 - Etapa 2: conseguir video RGB y replantear las sub-etapas 2.1 y 2.2 con foco en validar la frecuencia dominante medida con cámara contra un sensor inercial en las mismas personas.
 
