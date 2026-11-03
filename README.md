@@ -12,7 +12,7 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 | 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Revisado, con observaciones |
 | 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Revisado, con observaciones |
 | 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Revisado, con observaciones (análisis complementarios en el notebook 05b) |
-| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador listo, en revisión con el profesor guía (aún no se publica en el repositorio) |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Pendiente |
 
 La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), y lo que se hizo con cada observación están en la bitácora.
 
@@ -195,23 +195,6 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - La referencia elegida en el EDA no se usa como punto de comparación, porque su AUC está inflado.
 - Umbral de tamizaje elegido para sensibilidad ≥ 80 % (importa más no dejar pasar a quien cae).
 
-### Semanas 12-14 · Sub-etapa 1.5: artículo metodológico (adelantada)
-
-**Avanzado**
-- Borrador del artículo en plantilla IEEE, en inglés y en español (8 páginas cada uno), con sus proyectos para Overleaf. Se comparte con el profesor guía y se subirá al repositorio cuando se decida publicarlo.
-- Se verificaron las 46 referencias contra su fuente original (autores, revista, volumen, páginas y DOI).
-- Se revisó que estuvieran todos los productos de la Etapa 1 pedidos en el plan.
-- Se contrastaron los resultados con literatura fuera de la bibliografía del 1.1 y se agregaron nueve referencias (ver *Fuentes adicionales*).
-
-**Resultados que agrega el artículo**
-- Cálculo de tamaño de muestra (Riley *et al.*, 2020): incluso un modelo de una variable necesitaría unas 380 personas, y con las nueve variables de cámara, unas 500. Con 72, solo se pueden estimar modelos muy simples.
-- El estudio más cercano con LTMM (Askhatova *et al.*, 2026, red convolucional temporal) reporta AUC medio 0,75, dentro del intervalo del modelo de una variable de este proyecto.
-- Contraste con van Schooten *et al.* (2015), donde la marcha de vida diaria sí mejoró la predicción prospectiva: el resultado negativo de la extensión se presenta como propio de LTMM y de estas variables.
-
-**Decisiones**
-- La afirmación de novedad se redactó con prudencia: lo nuevo es la comparación contra referencias simples con validación repetida y prueba corregida.
-- Se declara que el informe aún no se revisó punto por punto con la guía TRIPOD+AI.
-
 ### Revisión del profesor guía (01-11-2026)
 
 **Resultado:** los avances 1.1 a 1.4 cumplen lo esencial del plan, con observaciones. El repositorio está completo y los notebooks 03 y 05 se reprodujeron en un entorno limpio (XGBoost varió de 0,644 a 0,636 por la versión de la librería).
@@ -254,16 +237,24 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - **1.2 (versión 2):** URL del repositorio, señales limpias de la LSTM documentadas, cambio respecto del plan (sin velocidad ni largo de zancada), filtro de redundancia aplicado a todas las personas, posible efecto de la duración de las caminatas y redacción más prudente sobre CASIA (la cadencia es coherente, no validada; las siluetas no sirven para MediaPipe).
 - **1.3 (versión 3):** tabla de correspondencia de personas entre fuentes (incluidos los archivos CO028_n, CO029_n y CO038_2), explicación del AUC de 0,38, épocas de la LSTM final y límites de la parada temprana, tratamiento de las 4 personas sin TUG, sesgo del detector calibrado con las mismas personas y alcance de la extensión.
 - **1.4 (versión 2):** "numéricamente mayor, sin diferencias significativas", comparación con el azar y con el TUG, umbral en Hz, umbral elegido sin mirar la prueba, matriz de confusión, calibración, velocidad, columna de 6 meses y sesgos declarados.
-- **Artículo 1.5:** resultados del 05b, sesgos declarados y Etapa 2 replanteada.
 
 **Avances sobre lo pendiente (03-11-2026)**
-- **Método de búsqueda del 1.1:** completado; falta consignar en el informe las bases consultadas, las palabras clave y las fechas de la búsqueda.
+- **Método de búsqueda del 1.1:** completado.
 - **Estatura (1.2, punto 3):** la planilla clínica no trae estatura ni peso, así que el largo de paso no se puede estimar con el modelo de péndulo invertido. Se cierra como limitación. La planilla sí trae una segunda velocidad, `s3(velocity)`, que no se ha usado.
 - **Video RGB (Etapa 2):** CASIA B entrega, además de las siluetas, los archivos de video originales. Hay que solicitarlos y descargarlos; servirán para probar MediaPipe, aunque sin una medida de referencia de la marcha.
 - **Control de duración (1.2, punto 4):** notebook `05c_Control_duracion.ipynb`, con su plan escrito antes de ejecutarlo.
 
+**Resultados del notebook 05c (03-11-2026)**
+- Todas las caminatas se recortaron a 24,0 s (la más corta) y se recalcularon las 17 variables.
+- La frecuencia dominante siguió siendo menor en quienes caen (1,81 frente a 1,92 Hz), pero su efecto bajó de r = −0,49 a r = −0,40 y dejó de ser significativa tras Holm (p = 0,067). Ninguna variable quedó significativa.
+- AUC con la misma duración: frecuencia dominante fija 0,70 (antes 0,75), procedimiento seleccionado 0,65 (antes 0,72) y Random Forest 0,70 (antes 0,68); ningún cambio es significativo.
+- La duración original sola distingue a los grupos con AUC 0,74 (IC 95 %: 0,61 a 0,88).
+- Según la regla del plan, **la duración explica al menos en parte el resultado**.
+- Revisión posterior, fuera del plan: la duración se correlaciona con la velocidad de la planilla (ρ = −0,71) y con el TUG (ρ = 0,74). La duración funciona como una medida de lentitud: en LTMM, lo que más distingue a quienes caen es que caminan más lento, y la frecuencia dominante recoge en parte eso. Parte de la baja también puede deberse a que con 24 s el espectro se estima con menos ciclos.
+- Se actualizaron los informes 1.2 y 1.4 y la respuesta a la revisión.
+
 **Pendiente**
-- Ejecutar el notebook 05c: recortar todas las caminatas a la misma duración, repetir el análisis y registrar aquí sus resultados.
+- Solicitar y descargar los videos originales de CASIA B para probar MediaPipe.
 - Aprobación por escrito del profesor guía de los cambios respecto del plan.
 - Etapa 2: conseguir video RGB y replantear las sub-etapas 2.1 y 2.2 con foco en validar la frecuencia dominante medida con cámara contra un sensor inercial en las mismas personas.
 
@@ -281,7 +272,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 
 ## Fuentes adicionales usadas después de la sub-etapa 1.1
 
-La bibliografía completa del estado del arte (26 fuentes) está en el documento 1.1. Además, en las sub-etapas 1.2 a 1.5 se usaron:
+La bibliografía completa del estado del arte (26 fuentes) está en el documento 1.1. Además, en las sub-etapas 1.2 a 1.4 se usaron:
 
 - R. Moe-Nilssen y J. L. Helbostad, "Estimation of gait cycle characteristics by trunk accelerometry," *J. Biomech.*, vol. 37, no. 1, pp. 121–126, 2004 (regularidad y simetría por autocorrelación, sub-etapa 1.2).
 - S. Holm, "A simple sequentially rejective multiple test procedure," *Scand. J. Statist.*, vol. 6, no. 2, pp. 65–70, 1979 (corrección por comparaciones múltiples).
@@ -290,14 +281,7 @@ La bibliografía completa del estado del arte (26 fuentes) está en el documento
 - C. Nadeau y Y. Bengio, "Inference for the generalization error," *Mach. Learn.*, vol. 52, no. 3, pp. 239–281, 2003 (prueba t corregida, sub-etapa 1.4).
 - R. R. Bouckaert y E. Frank, "Evaluating the replicability of significance tests for comparing learning algorithms," en *PAKDD 2004*, LNCS vol. 3056, pp. 3–12 (sub-etapa 1.4).
 - C. Ambroise y G. J. McLachlan, "Selection bias in gene extraction on the basis of microarray gene-expression data," *Proc. Natl. Acad. Sci. USA*, vol. 99, no. 10, pp. 6562–6566, 2002 (sesgo de selección de variables, sub-etapa 1.4).
-- W. Zijlstra y A. L. Hof, "Assessment of spatio-temporal gait parameters from trunk accelerations during human walking," *Gait Posture*, vol. 18, no. 2, pp. 1–10, 2003 (estimación del largo de paso, sub-etapa 1.5).
-- E. Barry, R. Galvin, C. Keogh, F. Horgan y T. Fahey, "Is the Timed Up and Go test a useful predictor of risk of falls in community dwelling older adults: A systematic review and meta-analysis," *BMC Geriatr.*, vol. 14, art. 14, 2014 (limitaciones del TUG, sub-etapa 1.5).
-- E. Christodoulou *et al.*, "A systematic review shows no performance benefit of machine learning over logistic regression for clinical prediction models," *J. Clin. Epidemiol.*, vol. 110, pp. 12–22, 2019 (sub-etapa 1.5).
-- Y. Gao *et al.*, "Machine learning and deep learning models for predicting future falls in community-dwelling older adults: Systematic review and meta-analysis of longitudinal evidence," *J. Med. Internet Res.*, vol. 28, art. e84844, 2026 (sub-etapa 1.5).
-- I. Hillel *et al.*, "Is every-day walking in older adults more analogous to dual-task walking or to usual walking?," *Eur. Rev. Aging Phys. Act.*, vol. 16, art. 6, 2019 (marcha en laboratorio frente a vida diaria, sub-etapa 1.5).
-- K. S. van Schooten *et al.*, "Ambulatory fall-risk assessment: Amount and quality of daily-life gait predict falls in older adults," *J. Gerontol. A Biol. Sci. Med. Sci.*, vol. 70, no. 5, pp. 608–615, 2015 (sub-etapa 1.5).
-- A. Nait Aicha *et al.*, "Deep learning to predict falls in older adults based on daily-life trunk accelerometry," *Sensors*, vol. 18, no. 5, art. 1654, 2018 (sub-etapa 1.5).
-- A. Askhatova *et al.*, "A temporal convolutional network approach for gait-based fall risk prediction to support safe sport participation in older adults," *MethodsX*, vol. 16, art. 103845, 2026 (estudio más cercano con LTMM, sub-etapa 1.5).
-- R. D. Riley *et al.*, "Calculating the sample size required for developing a clinical prediction model," *BMJ*, vol. 368, art. m441, 2020 (tamaño de muestra, sub-etapa 1.5).
-- G. S. Collins *et al.*, "TRIPOD+AI statement: Updated guidance for reporting clinical prediction models that use regression or machine learning methods," *BMJ*, vol. 385, art. e078378, 2024 (sub-etapa 1.5).
+- W. Zijlstra y A. L. Hof, "Assessment of spatio-temporal gait parameters from trunk accelerations during human walking," *Gait Posture*, vol. 18, no. 2, pp. 1–10, 2003 (estimación del largo de paso, sub-etapa 1.2).
+- E. Barry, R. Galvin, C. Keogh, F. Horgan y T. Fahey, "Is the Timed Up and Go test a useful predictor of risk of falls in community dwelling older adults: A systematic review and meta-analysis," *BMC Geriatr.*, vol. 14, art. 14, 2014 (limitaciones del TUG, sub-etapa 1.4).
+- A. Askhatova *et al.*, "A temporal convolutional network approach for gait-based fall risk prediction to support safe sport participation in older adults," *MethodsX*, vol. 16, art. 103845, 2026 (estudio más cercano con LTMM, sub-etapa 1.1).
 - S. García-de-Villa *et al.*, "A database with frailty, functional and inertial gait metrics for the research of fall causes in older adults," *Sci. Data*, vol. 10, 2023 (base GSTRIDE, candidata para validación externa).
