@@ -134,3 +134,17 @@ Los notebooks 03 y 04 agregan el nombre de la opción al final de sus archivos: 
 | `cl` | Con abrigo | B |
 | `fn`, `fb`, `fq`, `fs` | De noche, infrarrojo: normal, con bolso, rápido, lento | C |
 | ángulo `000`–`180` | Ángulo de la cámara; lateral = `000` en A, `090` en B; en C es siempre lateral (`lat`) | |
+
+## Revisión del profesor guía (notebooks `05b_Respuesta_revision.ipynb` y `05c_Control_duracion.ipynb`)
+
+| Archivo | Contenido |
+|---|---|
+| `resultados/revision_velocidad_por_particion.csv` | Métricas de la referencia "solo velocidad" (`base(velocity)` de la planilla) y de velocidad + frecuencia dominante en las 50 particiones del notebook 03 |
+| `resultados/revision_comparacion_velocidad.csv` | Comparación de esos modelos con la frecuencia dominante, el modelo seleccionado y el TUG (prueba t corregida, p sin corregir y p de Holm) |
+| `resultados/revision_mismas_personas.csv` | Métricas por partición usando solo las 68 personas que tienen TUG, para comparar todos los modelos con las mismas personas |
+| `resultados/revision_vs_azar_y_tug.csv` | Modelo seleccionado y frecuencia dominante comparados con el azar (AUC 0,5) y con el TUG |
+| `resultados/revision_umbral_calibracion.csv` | Puntaje de Brier del modelo y de la referencia (proporción de caedores), y sensibilidad y especificidad con el umbral elegido sin mirar la prueba |
+| `resultados/revision_etiqueta_6_meses.csv` | Métricas con la columna `6 Months Fall` como etiqueta; se usó solo para revisar qué mide esa columna, no como etiqueta nueva |
+| `datos/procesados/labwalks_variables_duracion_comun.csv` | Las mismas 17 variables de `labwalks_variables.csv`, recalculadas con todas las caminatas recortadas a 24,0 s (la más corta) |
+| `resultados/control_duracion_eda.csv` | Por variable: medianas de cada grupo, efecto r y p de Holm con la duración común, junto con el efecto y el p originales y la correlación con la variable original |
+| `resultados/control_duracion_modelos.csv` | AUC de los modelos principales con la duración común frente al original (diferencia, p y p de Holm), y AUC de la duración original sola |
