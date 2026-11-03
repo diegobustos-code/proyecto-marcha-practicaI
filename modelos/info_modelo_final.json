@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-23T00:04:47",
+  "fecha": "2026-10-27T10:39:04",
   "modelo": "1 variable de cámara elegida en cada partición",
   "tipo": "LogisticRegression",
   "variables_en_orden": [
