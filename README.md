@@ -8,13 +8,13 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 
 | Sub-etapa | Semanas | Producto | Estado |
 |---|---|---|---|
-| 1.1 Marco teórico y estado del arte | 1-3 | Síntesis bibliográfica con tabla comparativa | ✅ Revisado, con observaciones |
-| 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Revisado, con observaciones |
-| 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Revisado, con observaciones |
-| 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Revisado, con observaciones (análisis complementarios en el notebook 05b) |
-| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Pendiente |
+| 1.1 Marco teórico y estado del arte | 1-3 | Síntesis bibliográfica con tabla comparativa | ✅ Aprobado (06-11-2026) |
+| 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Aprobado (06-11-2026) |
+| 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Aprobado (06-11-2026) |
+| 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Aprobado (06-11-2026), con los análisis complementarios de los notebooks 05b y 05c |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Por iniciar |
 
-La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), y lo que se hizo con cada observación están en la bitácora.
+La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), lo que se hizo con cada observación y su carta de aprobación (6 de noviembre de 2026) están en la bitácora.
 
 ## Documentos de avance
 
@@ -38,9 +38,9 @@ La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instala
 | `notebooks/02_EDA_CASIA.ipynb` | 1.2 | Revisa las siluetas de CASIA A, B y C: inventario, completitud, calidad y cadencia estimada desde la imagen. |
 | `notebooks/03_Modelos_RF_XGBoost.ipynb` | 1.3 | Entrena y valida Random Forest y XGBoost, y los compara con tres referencias simples (sin modelo, una variable y TUG). |
 | `notebooks/04_Modelo_LSTM.ipynb` | 1.3 | Entrena y valida una red CNN + LSTM con las señales, y compara los tres modelos en las mismas particiones. |
-| `notebooks/05_Evaluacion_y_seleccion.ipynb` | 1.4 | Junta todos los resultados, los compara con la prueba t corregida para validación cruzada, evalúa los análisis definidos de antemano y selecciona el modelo final para la Etapa 2. |
+| `notebooks/05_Evaluacion_y_seleccion.ipynb` | 1.4 | Junta todos los resultados, los compara con la prueba t corregida para validación cruzada, evalúa los análisis escritos al inicio del notebook y selecciona el modelo final para la Etapa 2. |
 | `notebooks/05b_Respuesta_revision.ipynb` | 1.4 (complemento) | Responde a la revisión del profesor guía sin modificar los notebooks anteriores: versiones exactas (`requirements.txt`), columna "6 Months Fall", referencia "solo velocidad", comparación en las mismas personas, modelo elegido contra el azar y contra el TUG, umbral en Hz, matriz de confusión y calibración. |
-| `notebooks/05c_Control_duracion.ipynb` | 1.4 (complemento) | Control pedido en la revisión: recorta todas las caminatas a la misma duración, recalcula las variables con las funciones del notebook 01 y repite el análisis exploratorio y los modelos principales en las mismas 50 particiones. Necesita las señales limpias del notebook 01, que no se suben a GitHub. |
+| `notebooks/05c_Control_duracion.ipynb` | 1.4 (complemento) | Control pedido en la revisión: recorta todas las caminatas a la misma duración, recalcula las variables con las funciones del notebook 01 y repite el análisis exploratorio y los modelos principales en las mismas 50 particiones. Usa las señales limpias del notebook 01, que están en `datos/procesados/senales_limpias/`. |
 
 En los notebooks 03 y 04, el parámetro `DATOS` de la configuración elige los datos de entrada: `"laboratorio"` (caminatas de 1 minuto), `"vida_diaria"` (registros de 3 días) o `"combinado"` (ambos). Los resultados de cada opción se guardan con su nombre al final (por ejemplo `metricas_modelos_vida_diaria.csv`) y no se sobrescriben.
 
@@ -112,8 +112,8 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 
 **Avanzado**
 - Marco teórico: parámetros de marcha, sensores inerciales y estimación de pose, Random Forest, XGBoost y LSTM, métricas y validación.
-- Revisión de 26 fuentes, de las cuales 16 son trabajos científicos publicados entre 2020 y 2026, incluidos tres metaanálisis o revisiones sistemáticas.
-- Tabla comparativa de 10 estudios experimentales (participantes, sensor, modelo, resultado y tipo de etiqueta).
+- Revisión de 34 fuentes, entre ellas 14 estudios experimentales publicados entre 2020 y 2026 y tres metaanálisis o revisiones sistemáticas (cifras de la versión 2; la primera versión decía 26 fuentes).
+- Tablas comparativas de los 14 estudios experimentales: participantes, sensor, modelo, resultado y tipo de etiqueta (Tabla I), y dataset, validación y métricas (Tabla II). La primera versión tenía 10 estudios.
 - Cinco brechas identificadas: etiquetas retrospectivas, validación poco rigurosa, sensibilidad baja, falta de estandarización y pocos estudios con cámara en adultos mayores.
 
 **Decisiones**
@@ -191,7 +191,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - **Modelo seleccionado:** regresión logística con la frecuencia dominante. AUC 0,72 (IC 95 %: 0,57 a 0,88); coeficiente −0,87 (menor frecuencia = más riesgo). Con umbral 0,40: sensibilidad ≥ 80 % y especificidad 0,47.
 
 **Decisiones**
-- Criterios de selección fijados de antemano: (1) variables medibles con cámara en condiciones de laboratorio, como en la Etapa 2; (2) no ser significativamente peor que el mejor; (3) el más simple.
+- Criterios de selección escritos al inicio del notebook 05, antes de ejecutarlo: (1) variables medibles con cámara en condiciones de laboratorio, como en la Etapa 2; (2) no ser significativamente peor que el mejor; (3) el más simple.
 - La referencia elegida en el EDA no se usa como punto de comparación, porque su AUC está inflado.
 - Umbral de tamizaje elegido para sensibilidad ≥ 80 % (importa más no dejar pasar a quien cae).
 
@@ -213,7 +213,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
   - Expresa el umbral en Hz, estima la especificidad con el umbral elegido solo con las personas de entrenamiento, y agrega matriz de confusión y calibración (Brier).
 - Se corrigió la carrera en este README: el proyecto pertenece a Ingeniería en Automatización y Robótica; el investigador es estudiante de Ingeniería Civil Eléctrica.
 
-**Cambios respecto del plan original (para aprobación del profesor guía)**
+**Cambios respecto del plan original (aprobados por el profesor guía el 06-11-2026)**
 - CASIA no se usa para entrenar, porque no tiene etiquetas de caída. Además, las siluetas descargadas no sirven para MediaPipe, que necesita video RGB.
 - No se usó Gait in Aging and Disease, porque no tiene etiquetas de caída; se usó LTMM.
 - Se usó PyTorch en vez de TensorFlow.
@@ -253,10 +253,17 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - Revisión posterior, fuera del plan: la duración se correlaciona con la velocidad de la planilla (ρ = −0,71) y con el TUG (ρ = 0,74). La duración funciona como una medida de lentitud: en LTMM, lo que más distingue a quienes caen es que caminan más lento, y la frecuencia dominante recoge en parte eso. Parte de la baja también puede deberse a que con 24 s el espectro se estima con menos ciclos.
 - Se actualizaron los informes 1.2 y 1.4 y la respuesta a la revisión.
 
+### Aprobación del profesor guía (06-11-2026)
+
+- Se aprueban los siete cambios respecto del plan. El modelo final se presentará en el artículo como resultado de criterios de selección explícitos, no como el de mejor desempeño.
+- La extensión con vida diaria entra al artículo como análisis secundario con resultado negativo, en una sección breve después del resultado principal.
+- El nuevo enfoque de la Etapa 2 queda aprobado en principio: lo importante es comprobar que la cámara mide la frecuencia dominante igual que el sensor inercial. La aprobación definitiva depende de un plan detallado de la Etapa 2.
+- Se pidieron seis correcciones menores, ya hechas: resumen del 1.1 (34 fuentes y 14 estudios experimentales) y su bitácora, "definidos de antemano" en la discusión del 1.4 y en este README, señales limpias en la descripción del 05c, confirmación de los videos de CASIA en el 1.2, número de artículo y DOI de G-STRIDE en el 1.1, y la lectura del umbral de 1,93 Hz, que queda para el artículo.
+
 **Pendiente**
-- Solicitar y descargar los videos originales de CASIA B para probar MediaPipe.
-- Aprobación por escrito del profesor guía de los cambios respecto del plan.
-- Etapa 2: conseguir video RGB y replantear las sub-etapas 2.1 y 2.2 con foco en validar la frecuencia dominante medida con cámara contra un sensor inercial en las mismas personas.
+- Sub-etapa 1.5: artículo en plantilla IEEE, revisado con la guía TRIPOD+AI.
+- En paralelo: plan detallado de la Etapa 2, subido al repositorio antes de empezar las mediciones. Los videos originales de CASIA B se solicitaron el 08-11-2026 (el sitio de CASIA no responde, así que la solicitud se envió a su oficina de Cooperación Internacional); su entrega no está asegurada, por lo que la Etapa 2 se basa en grabaciones propias con cámara e IMU.
+- La Etapa 2 empieza cuando estén aprobados el borrador del artículo y el plan detallado.
 
 ## Fuentes de datos
 
@@ -272,7 +279,7 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 
 ## Fuentes adicionales usadas después de la sub-etapa 1.1
 
-La bibliografía completa del estado del arte (26 fuentes) está en el documento 1.1. Además, en las sub-etapas 1.2 a 1.4 se usaron:
+La bibliografía completa del estado del arte (34 fuentes) está en el documento 1.1. Además, en las sub-etapas 1.2 a 1.4 se usaron:
 
 - R. Moe-Nilssen y J. L. Helbostad, "Estimation of gait cycle characteristics by trunk accelerometry," *J. Biomech.*, vol. 37, no. 1, pp. 121–126, 2004 (regularidad y simetría por autocorrelación, sub-etapa 1.2).
 - S. Holm, "A simple sequentially rejective multiple test procedure," *Scand. J. Statist.*, vol. 6, no. 2, pp. 65–70, 1979 (corrección por comparaciones múltiples).
