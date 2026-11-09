@@ -5,3 +5,9 @@ datos/crudos/**
 __pycache__/
 # Señales de vida diaria para la LSTM (se regeneran con el notebook 01b)
 datos/procesados/vida_diaria/senales/
+# Videos etapa 2
+*.avi
+*.mp4
+*.mov
+*.task
+*.zip
