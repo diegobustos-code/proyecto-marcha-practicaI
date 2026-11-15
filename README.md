@@ -320,7 +320,7 @@ resultados de la Etapa 1.
 ## Uso de inteligencia artificial
 
 Los notebooks y el código de este proyecto los escribió Claude (Anthropic) a partir de mis indicaciones, y
-también me apoyó en la redacción de los informes. Yo reuní y preparé los datos, ejecuté los notebooks,
+también me apoyó en la redacción de los informes. Yo reuní los datos, ejecuté los notebooks,
 revisé los resultados y tomé las decisiones del estudio: las preguntas de investigación, los criterios de
 análisis y la interpretación. Soy el responsable del contenido. El software de la Etapa 2 se desarrolló de
 la misma forma, a partir del código de ejemplo de la IMU del profesor guía; el detalle está en
