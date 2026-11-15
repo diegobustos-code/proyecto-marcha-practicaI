@@ -316,3 +316,11 @@ Las versiones compiladas (ejecutable de Windows, APK y firmware) están en
 [Releases](https://github.com/diegobustos-code/imu-marcha-app/releases/latest). Se separaron en otro
 repositorio porque cambian con frecuencia y se compilan y prueban solos en cada cambio, sin tocar los
 resultados de la Etapa 1.
+
+## Uso de inteligencia artificial
+
+Parte del código y de la redacción de este proyecto se hizo con asistencia de Claude (Anthropic): apoyo en
+la programación, revisión de textos y borradores de informes. Las preguntas de investigación, las
+decisiones de análisis y la interpretación de los resultados son del autor, que revisó todo el contenido y
+es responsable de él. El software de la Etapa 2 se desarrolló con mayor asistencia; el detalle está en
+[imu-marcha-app](https://github.com/diegobustos-code/imu-marcha-app#uso-de-inteligencia-artificial).
