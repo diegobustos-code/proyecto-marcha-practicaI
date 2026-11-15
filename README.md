@@ -319,8 +319,9 @@ resultados de la Etapa 1.
 
 ## Uso de inteligencia artificial
 
-Parte del código y de la redacción de este proyecto se hizo con asistencia de Claude (Anthropic): apoyo en
-la programación, revisión de textos y borradores de informes. Las preguntas de investigación, las
-decisiones de análisis y la interpretación de los resultados son del autor, que revisó todo el contenido y
-es responsable de él. El software de la Etapa 2 se desarrolló con mayor asistencia; el detalle está en
+Los notebooks y el código de este proyecto los escribió Claude (Anthropic) a partir de mis indicaciones, y
+también me apoyó en la redacción de los informes. Yo reuní y preparé los datos, ejecuté los notebooks,
+revisé los resultados y tomé las decisiones del estudio: las preguntas de investigación, los criterios de
+análisis y la interpretación. Soy el responsable del contenido. El software de la Etapa 2 se desarrolló de
+la misma forma, a partir del código de ejemplo de la IMU del profesor guía; el detalle está en
 [imu-marcha-app](https://github.com/diegobustos-code/imu-marcha-app#uso-de-inteligencia-artificial).
