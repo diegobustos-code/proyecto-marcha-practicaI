@@ -12,7 +12,7 @@ Clasificación del riesgo de caída a partir de la marcha, con datos abiertos (P
 | 1.2 Obtención y preparación de datos | 4-5 | Dataset limpio + notebooks de EDA | ✅ Aprobado (06-11-2026) |
 | 1.3 Implementación y entrenamiento de modelos | 6-9 | Notebooks con los tres modelos entrenados (+ extensión con vida diaria) | ✅ Aprobado (06-11-2026) |
 | 1.4 Evaluación y selección del modelo | 10-11 | Tabla comparativa + informe de selección | ✅ Aprobado (06-11-2026), con los análisis complementarios de los notebooks 05b y 05c |
-| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Por iniciar |
+| 1.5 Artículo metodológico (IEEE) | 12-14 | Borrador del paper | Borrador v6 en español e inglés, en revisión del profesor guía |
 
 La revisión del profesor guía, Ángel Custodio (1 de noviembre de 2026), lo que se hizo con cada observación y su carta de aprobación (6 de noviembre de 2026) están en la bitácora.
 
@@ -27,7 +27,7 @@ Están en la carpeta [`Informes/`](Informes/), en PDF:
 | [Avance 1.3: implementación y entrenamiento de modelos](Informes/Avance_1.3_Implementacion_y_entrenamiento_de_modelos.pdf) | Random Forest, XGBoost, CNN + LSTM y extensión con registros de 3 días |
 | [Avance 1.4: evaluación y selección del modelo](Informes/Avance_1.4_Evaluacion_y_seleccion_del_modelo.pdf) | Comparación estadística, sesgo de selección y modelo final |
 
-La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instalar nada: `01_EDA_LabWalks`, `01b_Vida_diaria`, `02_EDA_CASIA`, `03_laboratorio`, `03_vida_diaria`, `03_combinado`, `04_laboratorio`, `04_vida_diaria`, `04_combinado`, `05_Evaluacion_y_seleccion` y `05b_Respuesta_revision`.
+La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instalar nada: `01_EDA_LabWalks`, `01b_Vida_diaria`, `02_EDA_CASIA`, `03_laboratorio`, `03_vida_diaria`, `03_combinado`, `04_laboratorio`, `04_vida_diaria`, `04_combinado`, `05_Evaluacion_y_seleccion`, `05b_Respuesta_revision`, `05c_Control_duracion` y `06_Simulacion_trozos_8s`.
 
 ## Notebooks
 
@@ -41,6 +41,7 @@ La misma carpeta tiene los notebooks exportados a HTML, para leerlos sin instala
 | `notebooks/05_Evaluacion_y_seleccion.ipynb` | 1.4 | Junta todos los resultados, los compara con la prueba t corregida para validación cruzada, evalúa los análisis escritos al inicio del notebook y selecciona el modelo final para la Etapa 2. |
 | `notebooks/05b_Respuesta_revision.ipynb` | 1.4 (complemento) | Responde a la revisión del profesor guía sin modificar los notebooks anteriores: versiones exactas (`requirements.txt`), columna "6 Months Fall", referencia "solo velocidad", comparación en las mismas personas, modelo elegido contra el azar y contra el TUG, umbral en Hz, matriz de confusión y calibración. |
 | `notebooks/05c_Control_duracion.ipynb` | 1.4 (complemento) | Control pedido en la revisión: recorta todas las caminatas a la misma duración, recalcula las variables con las funciones del notebook 01 y repite el análisis exploratorio y los modelos principales en las mismas 50 particiones. Usa las señales limpias del notebook 01, que están en `datos/procesados/senales_limpias/`. |
+| `notebooks/06_Simulacion_trozos_8s.ipynb` | Preparación de la 2.1 | Simulación que pidió el profesor guía antes de fijar los umbrales de la Etapa 2: compara la frecuencia dominante de trozos de 8 s con la de la caminata completa, en las mismas señales limpias, y prueba la regla de errores gruesos del plan. |
 
 En los notebooks 03 y 04, el parámetro `DATOS` de la configuración elige los datos de entrada: `"laboratorio"` (caminatas de 1 minuto), `"vida_diaria"` (registros de 3 días) o `"combinado"` (ambos). Los resultados de cada opción se guardan con su nombre al final (por ejemplo `metricas_modelos_vida_diaria.csv`) y no se sobrescriben.
 
@@ -265,6 +266,37 @@ La literatura muestra que la marcha permite clasificar el riesgo de caída: el m
 - En paralelo: plan detallado de la Etapa 2, subido al repositorio antes de empezar las mediciones. Los videos originales de CASIA B se solicitaron el 08-11-2026 (el sitio de CASIA no responde, así que la solicitud se envió a su oficina de Cooperación Internacional); su entrega no está asegurada, por lo que la Etapa 2 se basa en grabaciones propias con cámara e IMU.
 - La Etapa 2 empieza cuando estén aprobados el borrador del artículo y el plan detallado.
 
+### Plan detallado de la Etapa 2 (08 al 21-11-2026)
+
+**Avanzado**
+- Plan detallado en cuatro versiones. La 1 (08-11) proponía usar el celular como sensor de referencia. La 2 (09-11) sumó lo que pidió el profesor guía en sus dos correos de ese día: las bases públicas del metrónomo y de Toronto para la 2.1, la regla de errores gruesos, el ICC solo a velocidad normal, el umbral de 1,93 Hz aplicado sobre la caminata de 1 minuto, el porcentaje de clasificaciones iguales como análisis secundario y la velocidad medida en 10 m. La 3 (15-11) cambió el sensor principal a una IMU dedicada, porque el profesor ofreció financiarla (correo del 13-11), y dejó el celular como respaldo. La 4 (21-11) solo corrige la tabla de la simulación con los resultados del notebook 06.
+- Protocolo de preparación de la sesión con adultos mayores (anexo del plan). Para ellos el salto de sincronización se cambió por 5 s de pie quietos antes de caminar.
+- Notebook 06: la simulación que pidió el profesor. Se subió sin ejecutar el 16-11 y se ejecutó el 21-11.
+- Software de registro y procesamiento en el repositorio [imu-marcha-app](https://github.com/diegobustos-code/imu-marcha-app), a partir del firmware de ejemplo del profesor (`imu_esp32_udp.ino`). Se mantuvieron su formato de paquetes, sus escalas y su red WiFi, y se agregaron el soporte para el M5Stick, el muestreo independiente del WiFi, el control a distancia y el respaldo en la memoria del equipo. Por ahora está probado solo en simulación.
+
+**Resultados del notebook 06** (358 trozos de 8 s de las 72 caminatas limpias)
+- El 11,2 % de los trozos difiere en más de 0,10 Hz de su caminata completa (el profesor había visto cerca del 8 % en una prueba rápida). Los límites de concordancia van de −0,43 a 0,42 Hz, y con la regla, de −0,32 a 0,28 Hz. Esa diferencia sale de comparar la misma IMU consigo misma: viene de usar solo 8 s de señal, no de la cámara.
+- El pico saltó a la mitad o al doble en el 2,2 % de los trozos, y con la regla en el 0,6 %. De los 8 saltos sin la regla, 6 son de fl017, cuya caminata completa había quedado en la frecuencia de zancada (1,29 Hz; la regla la lleva a 2,61 Hz). La regla también se equivocó una vez, en un trozo de fl004, donde subió el valor a 2,99 Hz.
+
+**Decisiones**
+- La comparación principal de la Etapa 2 es cámara contra IMU en la misma ventana, y el umbral de 1,93 Hz se aplica solo sobre la caminata de 1 minuto.
+- El caso de fl017 se declara como limitación en el artículo; la Etapa 1 no se reanaliza.
+- La prueba piloto con la base del metrónomo, hecha antes de tener criterios escritos, se informa como exploratoria en un notebook 07.
+
+### Semanas 12-13 · Sub-etapa 1.5: artículo
+
+**Avanzado**
+- Borrador en plantilla IEEE, en español y en inglés, hoy en la versión 6 (21-11-2026), con una sección que declara el uso de inteligencia artificial.
+- La versión 6 incluye la limitación de fl017 y el resultado de la simulación de trozos de 8 s.
+- Queda en la carpeta del profesor guía para su revisión. Se subirá a este repositorio cuando él, que es coautor, lo apruebe.
+
+**Pendiente**
+- Aprobación del plan v4. Recién entonces se sube como versión aprobada, y siempre antes de medir a cualquier persona.
+- Solicitud al comité de ética, que se prepara en paralelo con el artículo (la revisión puede tardar hasta 45 días). El profesor está averiguando qué comité corresponde.
+- Compra de la IMU: el vendedor encontrado no emite boleta, y la compra hay que rendirla a la universidad. Falta confirmar si se acepta una factura extranjera o si se usa la alternativa con ESP32 + MPU-6050.
+- Contacto con Kinesiología y equipos de la UNAB, que está consultando el profesor.
+- Probar el firmware y las aplicaciones con el hardware real.
+
 ## Fuentes de datos
 
 **PhysioNet – Long Term Movement Monitoring (LTMM)**
@@ -295,10 +327,10 @@ La bibliografía completa del estado del arte (34 fuentes) está en el documento
 
 ## Etapa 2: validación de la cámara contra una IMU (en preparación)
 
-- [Plan detallado de la Etapa 2, versión 3](Informes/Plan_detallado_Etapa2_Proyecto1_Diego_Bustos_v3.pdf) (15-11-2026).
+- [Plan detallado de la Etapa 2, versión 4](Informes/Plan_detallado_Etapa2_Proyecto1_Diego_Bustos_v4.pdf) (21-11-2026), pendiente de aprobación del profesor guía.
   Los criterios de concordancia (sección 4) quedaron fijados antes de medir y no se cambiarán después de ver los datos.
 - [Protocolo de preparación de la sesión con adultos mayores](Informes/Protocolo_preparacion_sesion_adultos_mayores.pdf) (anexo del plan).
-- Todavía no se ha medido a ninguna persona: las grabaciones empiezan cuando el comité de ética y el docente guía lo apruebe.
+- Todavía no se ha medido a ninguna persona: las grabaciones empiezan cuando el comité de ética y el profesor guía lo aprueben.
 - El firmware de la IMU y las aplicaciones de registro y procesamiento están en un repositorio aparte.
 
 ### Software de la Etapa 2
