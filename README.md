@@ -292,3 +292,36 @@ La bibliografía completa del estado del arte (34 fuentes) está en el documento
 - E. Barry, R. Galvin, C. Keogh, F. Horgan y T. Fahey, "Is the Timed Up and Go test a useful predictor of risk of falls in community dwelling older adults: A systematic review and meta-analysis," *BMC Geriatr.*, vol. 14, art. 14, 2014 (limitaciones del TUG, sub-etapa 1.4).
 - A. Askhatova *et al.*, "A temporal convolutional network approach for gait-based fall risk prediction to support safe sport participation in older adults," *MethodsX*, vol. 16, art. 103845, 2026 (estudio más cercano con LTMM, sub-etapa 1.1).
 - S. García-de-Villa *et al.*, "A database with frailty, functional and inertial gait metrics for the research of fall causes in older adults," *Sci. Data*, vol. 10, 2023 (base GSTRIDE, candidata para validación externa).
+
+## Etapa 2: validación de la cámara contra una IMU (en preparación)
+
+- [Plan detallado de la Etapa 2, versión 3](Informes/Plan_detallado_Etapa2_Proyecto1_Diego_Bustos_v3.pdf) (15-11-2026).
+  Los criterios de concordancia (sección 4) quedaron fijados antes de medir y no se cambiarán después de ver los datos.
+- [Protocolo de preparación de la sesión con adultos mayores](Informes/Protocolo_preparacion_sesion_adultos_mayores.pdf) (anexo del plan).
+- Todavía no se ha medido a ninguna persona: las grabaciones empiezan cuando el comité de ética y el docente guía lo apruebe.
+- El firmware de la IMU y las aplicaciones de registro y procesamiento están en un repositorio aparte.
+
+### Software de la Etapa 2
+
+El firmware de la IMU y las aplicaciones de registro y procesamiento están en un repositorio aparte:
+[imu-marcha-app](https://github.com/diegobustos-code/imu-marcha-app).
+
+| Componente | Qué hace |
+|---|---|
+| Firmware (`firmware/imu_marcha`) | IMU lumbar a 100 Hz para M5StickS3, M5StickC Plus2 o ESP32 + MPU-6050: envío por WiFi, control remoto y respaldo en la memoria interna. |
+| App de Windows (`windows`) | Registro con control de inicio y término, sincronización de relojes, recuperación ante fallas, procesamiento del video con MediaPipe y concordancia (Bland-Altman e ICC) con los criterios del plan. |
+| App Android (`android`) | Prueba de compatibilidad del celular, celular como IMU de respaldo y receptor de la IMU en terreno. |
+
+Las versiones compiladas (ejecutable de Windows, APK y firmware) están en
+[Releases](https://github.com/diegobustos-code/imu-marcha-app/releases/latest). Se separaron en otro
+repositorio porque cambian con frecuencia y se compilan y prueban solos en cada cambio, sin tocar los
+resultados de la Etapa 1.
+
+## Uso de inteligencia artificial
+
+Los notebooks y el código de este proyecto los escribió Claude (Anthropic) a partir de mis indicaciones, y
+también me apoyó en la redacción de los informes. Yo reuní los datos, ejecuté los notebooks,
+revisé los resultados y tomé las decisiones del estudio: las preguntas de investigación, los criterios de
+análisis y la interpretación. Soy el responsable del contenido. El software de la Etapa 2 se desarrolló de
+la misma forma, a partir del código de ejemplo de la IMU del profesor guía; el detalle está en
+[imu-marcha-app](https://github.com/diegobustos-code/imu-marcha-app#uso-de-inteligencia-artificial).
